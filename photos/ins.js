@@ -135,7 +135,7 @@
    document.querySelector('.instagram').innerHTML = '<div class="photos" itemscope="" itemtype="http://schema.org/ImageGallery">' + ulTmpl + '</div>';
         createVideoIncon();
         _view2.default.init();
-        };
+   };
 
     var replacer = function replacer(str) {
       var arr = str.split("/");
@@ -168,7 +168,7 @@
     function loadData(success) {
       if (!searchData) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', './ins.json?t=' + +new Date(), true);
+        xhr.open('GET', './data.json?t=' + +new Date(), true);
 
         xhr.onload = function() {
           if (this.status >= 200 && this.status < 300) {
