@@ -116,8 +116,8 @@
     var data = res.list[j].arr;
     var liTmpl = "";
     for (var i = 0, len = data.link.length; i < len; i++) {
-      var minSrc = 'https://github.com/zhangchengkk/BlogAlbums/tree/master/min_photos' + data.link[i];
-      var src = 'https://github.com/zhangchengkk/BlogAlbums/tree/master/photos' + data.link[i];
+      var minSrc = 'https://raw.githubusercontent.com/zhangchengkk/BlogAlbums/master/min_photos/' + data.link[i];
+      var src = 'https://raw.githubusercontent.com/zhangchengkk/BlogAlbums/master/photos/' + data.link[i];
       var type = data.type[i];
       var target = src + (type === 'video' ? '.mp4' : '.jpg');
       src += '';
@@ -132,6 +132,10 @@
     <ul class="img-box-ul">' + liTmpl + '</ul>\
     </section>';
   }
+   document.querySelector('.instagram').innerHTML = '<div class="photos" itemscope="" itemtype="http://schema.org/ImageGallery">' + ulTmpl + '</div>';
+        createVideoIncon();
+        _view2.default.init();
+        };
 
     var replacer = function replacer(str) {
       var arr = str.split("/");
