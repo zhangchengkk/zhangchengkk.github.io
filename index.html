@@ -186,54 +186,11 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##前言##<br>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a></p>
-<p>##准备工作##<br><strong>创建开发应用</strong><br><strong>1.</strong>蚂蚁金服开放平台-开发进入（导航栏）-支付应用立即接入。<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/%E7%AB%8B%E5%8D%B3%E6%8E%A5%E5%85%A5.PNG" alt="立即接入"><br><strong>2.</strong>填写相关信息创建一个开发应用，此时在开发者中心-我的应用 一栏下可以看到应用项，（我的应用为已上线状态，你的应该是开发中状态）如图：<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/yingyong.png" alt="创建应用图片"><br><strong>3.</strong>查看此应用，在左侧应用信息一栏，完善应用的名称、图标。配置应用公钥，然后获取根据应用公钥自动生成的支付宝公钥。</p>
-<blockquote>
-<ul>
-<li>应用公钥为开发者自己生成，支付宝提供相应生成工具（链接：<a href="https://docs.open.alipay.com/291/106097" target="_blank" rel="noopener">https://docs.open.alipay.com/291/106097</a>）。</li>
-<li>签名后会获取应用私钥、应用公钥两项，应用私钥用于后续开发应用作为配置参数，请保存。</li>
-<li>如若需要更换私钥密钥，重新生成替换使用即可。</li>
-<li>应用网关和授权回调地址为可选项，接口加密方式可不填，新版支付宝加密默认RSA2</li>
-</ul>
-</blockquote>
-<p>##运行官方demo##<br>代码编写调试时，我们一般选择使用沙箱环境账号。<br>首先，下载支付宝提供的demo运行查看相关配置和接口。附链接：<a href="https://docs.open.alipay.com/194/105201/" target="_blank" rel="noopener">https://docs.open.alipay.com/194/105201/</a><br>项目结构如图所示：<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/aliPayDemo.png" alt=""></p>
-<blockquote>
-<ul>
-<li>index.jsp为demo首页</li>
-<li>alipay.trade.page.pay.jsp为支付请求接口</li>
-<li>notify_url为支付宝服务器异步通知接口</li>
-<li>return_url为前端支付完成同步通知路径</li>
-</ul>
-</blockquote>
-<p>我们需要使用沙箱账号配置相关参数，如图所示：<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/aliconfig.png" alt=""></p>
-<blockquote>
-<p>我们需要修改的是appid、商户私钥（及应用私钥）、支付宝公钥（配置应用公钥后支付宝自动生成获得）、支付宝网关。这些信息在沙箱里都可以找到。</p>
-</blockquote>
-<p>配置完成后运行demo，沙箱环境提供卖家账号和卖家账号。但买家账号手机扫码支付只提供安卓，因此我们选择使用网页登陆支付宝的方式（使用买家账号）进行付款。</p>
-<blockquote>
-<ul>
-<li>对notify_url、return_url的解释：</li>
-<li>return_url为你扫码支付（或账号登陆支付）成功后，浏览器跳转通知的路径，你可以在新页面显示购买成功的信息，或者在请求路径中处理订单信息。<br>但如果用户支付完成直接关掉网页，此请求将不生效，因此订单状态处理以notify_url为准。</li>
-<li>notify_url是你支付成功后，支付宝服务器发送付款成功通知的路径，请求方式为POST。需要是公网可以访问的路径，后台数据处理以此为准。</li>
-</ul>
-</blockquote>
-<p>##编写项目代码（即时到账功能）##<br><strong>1.导入jar包</strong><br>在demo项目的WEB-INF/lib目录下可以找到对应的jar包。<br><strong>2.编写支付接口</strong><br><em>此接口的作用是根据前端传入的金额数，返回一段html代码，前端弹出供用户扫码支付。</em><br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//支付请求接口</span></span><br><span class="line">	@RequestMapping(value=<span class="string">"aliPay.do"</span>,method=RequestMethod.GET)</span><br><span class="line">	@ResponseBody</span><br><span class="line">	public void aliPayController(HttpServletRequest request,HttpServletResponse response,Model model)throws AlipayApiException, IOException,Exception&#123;</span><br><span class="line">		<span class="comment">//开发者业务逻辑代码编写处</span></span><br><span class="line">		<span class="comment">//比如获取前段消费金额、新建一条未支付状态订单</span></span><br><span class="line">		<span class="comment">//****************</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//初始化alipayClient</span></span><br><span class="line">		AlipayClient alipayClient=new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, <span class="string">"json"</span>, AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);</span><br><span class="line">		AlipayTradePagePayRequest alipayTradePagePayRequest=new AlipayTradePagePayRequest();</span><br><span class="line">		alipayTradePagePayRequest.setReturnUrl(AlipayConfig.return_url);</span><br><span class="line">		alipayTradePagePayRequest.setNotifyUrl(AlipayConfig.notify_url);</span><br><span class="line">		</span><br><span class="line">		 <span class="comment">//商户订单号（自己生成），商户网站订单系统中唯一订单号，必填</span></span><br><span class="line">        String out_trade_no = rechargeInformation.getRechargeId();</span><br><span class="line">        <span class="comment">//付款金额，必填</span></span><br><span class="line">        String total_amount = String.valueOf(rechargeCount);</span><br><span class="line">        <span class="comment">//订单名称，必填</span></span><br><span class="line">        String subject = rechargeInformation.getSubjectName();</span><br><span class="line">        <span class="comment">//商品描述，可空</span></span><br><span class="line">        String body =<span class="string">""</span>;</span><br><span class="line">        </span><br><span class="line">        alipayTradePagePayRequest.setBizContent(<span class="string">"&#123;<span class="subst">\"</span>out_trade_no<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+ out_trade_no +<span class="string">"<span class="subst">\"</span>,"</span> </span><br><span class="line">    			+ <span class="string">"<span class="subst">\"</span>total_amount<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+ total_amount +<span class="string">"<span class="subst">\"</span>,"</span> </span><br><span class="line">    			+ <span class="string">"<span class="subst">\"</span>subject<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+ subject +<span class="string">"<span class="subst">\"</span>,"</span> </span><br><span class="line">    			+ <span class="string">"<span class="subst">\"</span>body<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+ body +<span class="string">"<span class="subst">\"</span>,"</span> </span><br><span class="line">    			+ <span class="string">"<span class="subst">\"</span>product_code<span class="subst">\"</span>:<span class="subst">\"</span>FAST_INSTANT_TRADE_PAY<span class="subst">\"</span>&#125;"</span>);</span><br><span class="line">        </span><br><span class="line">      <span class="comment">//请求</span></span><br><span class="line">    	String result = alipayClient.pageExecute(alipayTradePagePayRequest).getBody();</span><br><span class="line">    	response.setContentType(<span class="string">"text/html;charset="</span> + AlipayConfig.charset);</span><br><span class="line">    	response.getWriter().write(result);<span class="comment">//直接将完整的表单html输出到页面</span></span><br><span class="line">    	response.getWriter().flush();</span><br><span class="line">    	response.getWriter().close();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>3.编写异步通知接口notify_url</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value=<span class="string">"notify_url.do"</span>,method=RequestMethod.POST)</span><br><span class="line">	@ResponseBody</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> notifyUrl(HttpServletRequest request,HttpServletResponse response)throws AlipayApiException,Exception&#123;</span><br><span class="line">		<span class="comment">//获取支付宝post过来反馈信息</span></span><br><span class="line">		Map&lt;<span class="keyword">String</span>,<span class="keyword">String</span>&gt; params = <span class="keyword">new</span> HashMap&lt;<span class="keyword">String</span>,<span class="keyword">String</span>&gt;();</span><br><span class="line">		Map&lt;<span class="keyword">String</span>,<span class="keyword">String</span>[]&gt; requestParams = request.getParameterMap();</span><br><span class="line">		<span class="built_in">for</span> (Iterator&lt;<span class="keyword">String</span>&gt; iter = requestParams.keySet().iterator(); iter.hasNext();) &#123;</span><br><span class="line">			<span class="keyword">String</span> name = (<span class="keyword">String</span>) iter.next();</span><br><span class="line">			<span class="keyword">String</span>[] values = (<span class="keyword">String</span>[]) requestParams.<span class="built_in">get</span>(name);</span><br><span class="line">			<span class="keyword">String</span> valueStr = <span class="string">""</span>;</span><br><span class="line">			<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; values.length; i++) &#123;</span><br><span class="line">				valueStr = (i == values.length - <span class="number">1</span>) ? valueStr + values[i]</span><br><span class="line">						: valueStr + values[i] + <span class="string">","</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//乱码解决，这段代码在出现乱码时使用</span></span><br><span class="line">			<span class="comment">//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");</span></span><br><span class="line">			params.<span class="built_in">put</span>(name, valueStr);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">boolean</span> signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); <span class="comment">//调用SDK验证签名</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//——请在这里编写您的程序（以下代码仅作参考）——</span></span><br><span class="line">		<span class="built_in">if</span>(signVerified) &#123;</span><br><span class="line">			<span class="comment">//商户订单号</span></span><br><span class="line">			<span class="keyword">String</span> out_trade_no = <span class="keyword">new</span> <span class="keyword">String</span>(request.getParameter(<span class="string">"out_trade_no"</span>).getBytes(<span class="string">"ISO-8859-1"</span>),<span class="string">"UTF-8"</span>);</span><br><span class="line">		</span><br><span class="line">			<span class="comment">//支付宝交易号</span></span><br><span class="line">			<span class="keyword">String</span> trade_no = <span class="keyword">new</span> <span class="keyword">String</span>(request.getParameter(<span class="string">"trade_no"</span>).getBytes(<span class="string">"ISO-8859-1"</span>),<span class="string">"UTF-8"</span>);</span><br><span class="line">		</span><br><span class="line">			<span class="comment">//付款金额</span></span><br><span class="line">			<span class="keyword">String</span> total_amount = <span class="keyword">new</span> <span class="keyword">String</span>(request.getParameter(<span class="string">"total_amount"</span>).getBytes(<span class="string">"ISO-8859-1"</span>),<span class="string">"UTF-8"</span>);</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//支付成功，修改订单状态为完成，添加账户余额。此处为个人业务代码</span></span><br><span class="line">			<span class="built_in">try</span>&#123;</span><br><span class="line">				<span class="built_in">if</span>(aliPayService.rechargeService(out_trade_no,total_amount)!=<span class="number">1</span>)&#123;</span><br><span class="line">					response.getWriter().<span class="built_in">write</span>(<span class="string">"fail"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;<span class="built_in">catch</span> (Exception e) &#123;</span><br><span class="line">				response.getWriter().<span class="built_in">write</span>(<span class="string">"fail"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//支付成功，输出success。支付宝接收到这7个字符才会确认成功，否则会在24小时内进行多次请求，时间间隔为5s,2m,10m,15m,1h,2h,6h,15h</span></span><br><span class="line">			response.getWriter().<span class="built_in">write</span>(<span class="string">"success"</span>);</span><br><span class="line">			<span class="comment">//out.println("trade_no:"+trade_no+"&lt;br/&gt;out_trade_no:"+out_trade_no+"&lt;br/&gt;total_amount:"+total_amount);</span></span><br><span class="line">		&#125;<span class="built_in">else</span> &#123;</span><br><span class="line">			response.getWriter().<span class="built_in">write</span>(<span class="string">"fail"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		response.getWriter().<span class="built_in">write</span>(<span class="string">"fail"</span>);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>4.编写return_url同步通知接口</strong></p>
-<blockquote>
-<ul>
-<li>此接口是一个浏览器支付成功跳转路径。可以根据需要设置。<br>如果是一个请求接口，则与notify_url几乎一样。只是不需要输出success。</li>
-<li>但SSM项目都是前后端分离，一般此路径为一个前端html页面，你可以在新的页面中请求后台获取订单状态、商品信息，去更新商品的购买后信息。</li>
-</ul>
-</blockquote>
-<p>##编写项目代码(接入支付宝单笔转账)##<br>单笔转账的功能比较简单，直接贴代码了。我把单笔转账直接写成工具类放在service层供调用，请根据需要修改。核心代码就是AlipayClient那一段。<br>附官方文档，看一下就知道了：<a href="https://docs.open.alipay.com/309/106235/" target="_blank" rel="noopener">https://docs.open.alipay.com/309/106235/</a><br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">@Service(<span class="string">"AliTransfer"</span>)</span><br><span class="line">public class AliTransfer &#123;</span><br><span class="line">	@Autowired</span><br><span class="line">	private MasterMapper masterMapper;</span><br><span class="line">	@Resource(name=<span class="string">"CreateOrderId"</span>)</span><br><span class="line">	private CreateOrderId createOrderId;</span><br><span class="line">	</span><br><span class="line">	public int transferEntity(String masterPhone,String masterName,int AccountBalance,String AliAccount)throws Exception&#123;</span><br><span class="line">		Master master=new Master();</span><br><span class="line">		master.setMasterPhone(masterPhone);</span><br><span class="line">		master=masterMapper.queryMasterByPhone(master);</span><br><span class="line">		if(master==null)&#123; return <span class="number">0</span>;&#125;</span><br><span class="line">		String orderId=createOrderId.createOrderid();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//单笔转账请求</span></span><br><span class="line">		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl,AlipayConfig.app_id,AlipayConfig.merchant_private_key,<span class="string">"json"</span>,<span class="string">"GBK"</span>,AlipayConfig.alipay_public_key,<span class="string">"RSA2"</span>);</span><br><span class="line">		AlipayFundTransToaccountTransferRequest request = new AlipayFundTransToaccountTransferRequest();</span><br><span class="line">		request.setBizContent(<span class="string">"&#123;"</span> +</span><br><span class="line">		<span class="string">"<span class="subst">\"</span>out_biz_no<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+orderId+<span class="string">"<span class="subst">\"</span>,"</span> +    <span class="comment">//商户网站生成的订单号</span></span><br><span class="line">		<span class="comment">/*收款方账户类型。可取值：1、ALIPAY_USERID：支付宝账号对应的支付宝唯一用户号。以2088开头的16位纯数字组成。2、ALIPAY_LOGONID：支付宝登录号，支持邮箱和手机号格式。*/</span></span><br><span class="line">		<span class="string">"<span class="subst">\"</span>payee_type<span class="subst">\"</span>:<span class="subst">\"</span>ALIPAY_LOGONID<span class="subst">\"</span>,"</span> +   </span><br><span class="line">		<span class="string">"<span class="subst">\"</span>payee_account<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+AliAccount+<span class="string">"<span class="subst">\"</span>,"</span> +  <span class="comment">//转账的支付宝账号</span></span><br><span class="line">		<span class="string">"<span class="subst">\"</span>amount<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+AccountBalance+<span class="string">"<span class="subst">\"</span>,"</span> +   <span class="comment">//转账的金额</span></span><br><span class="line">		<span class="string">"<span class="subst">\"</span>payer_show_name<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+masterPhone+<span class="string">"<span class="subst">\"</span>,"</span> +  <span class="comment">//付款方信息，显示在收款方账单详情页</span></span><br><span class="line">		<span class="string">"<span class="subst">\"</span>payee_real_name<span class="subst">\"</span>:<span class="subst">\"</span>"</span>+masterName+<span class="string">"<span class="subst">\"</span>,"</span> + <span class="comment">//收款方真实姓名</span></span><br><span class="line">		<span class="string">"<span class="subst">\"</span>remark<span class="subst">\"</span>:<span class="subst">\"</span>转账<span class="subst">\"</span>"</span> +           <span class="comment">//转账备注信息</span></span><br><span class="line">		<span class="string">"&#125;"</span>);</span><br><span class="line">		AlipayFundTransToaccountTransferResponse response = alipayClient.execute(request);</span><br><span class="line">		if(response.isSuccess())&#123;</span><br><span class="line">		System.out.println(<span class="string">"调用成功"</span>);</span><br><span class="line">		return <span class="number">1</span>;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">		System.out.println(<span class="string">"调用失败"</span>);</span><br><span class="line">		return <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>##沙箱环境转换成正式环境##<br>只需要把aliPayConfig配置文件中的appid、应用私钥、支付宝公钥、notify_url、return_url、网关修改为正式环境即可。</p>
-<blockquote>
-<ul>
-<li>我在使用时遇到一个问题，明明已经签约，正式环境还是显示权限不足请先签约。此时在支付宝开放平台-个人应用中将网站支付和单笔转账功能先删除掉，再添加进来就可以了。</li>
-</ul>
-</blockquote>
-
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><strong>创建开发应用</strong><br><strong>1.</strong>蚂蚁金服开放平台-开发进入（导航栏）-支付应用立即接入。<br>
+        
+          <a class="article-more-a" href="/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/#more">more >></a>
+        
       
 
       
@@ -246,7 +203,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java 支付宝</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">支付宝</a>
         		</li>
       		
 		</ul>
@@ -257,82 +218,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/30/hello-world/">Hello World</a>
-    </h1>
-  
-
-
-        <!-- 显示阅读和评论数 -->
-        
-
-
-        
-        <a href="/2018/01/30/hello-world/" class="archive-article-date">
-  	<time datetime="2018-01-30T13:42:36.974Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/30/hello-world/">展开全文 >></a>
         </p>
       
 
@@ -459,7 +344,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Java 支付宝</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">支付宝</a>
               </li>
             
             <div class="clearfix"></div>
