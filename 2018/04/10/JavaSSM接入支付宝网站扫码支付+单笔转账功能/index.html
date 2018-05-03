@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/yingyong.png">
 <meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/aliPayDemo.png">
 <meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/aliconfig.png">
-<meta property="og:updated_time" content="2018-05-03T03:24:46.288Z">
+<meta property="og:updated_time" content="2018-05-03T03:28:30.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java接入支付宝网站扫码支付+单笔转账">
 <meta name="twitter:description" content="前言项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。附沙箱环境介绍：https://docs.open.alipay.com/200/105311">
@@ -192,7 +192,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/IMG_2039.JPG" alt="图片"></p>
+        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/IMG_2039.JPG" style="width: 50%;height: 50%"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a><br><a id="more"></a></p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><strong>创建开发应用</strong><br><strong>1.</strong>蚂蚁金服开放平台-开发进入（导航栏）-支付应用立即接入。<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/%E7%AB%8B%E5%8D%B3%E6%8E%A5%E5%85%A5.PNG" alt="立即接入"><br><strong>2.</strong>填写相关信息创建一个开发应用，此时在开发者中心-我的应用 一栏下可以看到应用项，（我的应用为已上线状态，你的应该是开发中状态）如图：<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/yingyong.png" alt="创建应用图片"><br><strong>3.</strong>查看此应用，在左侧应用信息一栏，完善应用的名称、图标。配置应用公钥，然后获取根据应用公钥自动生成的支付宝公钥。</p>
 <blockquote>
