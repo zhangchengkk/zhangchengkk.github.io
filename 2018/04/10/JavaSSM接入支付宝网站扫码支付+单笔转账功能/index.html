@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://zhangcheng.fun">
   <title>Java接入支付宝网站扫码支付+单笔转账 | 尘曲|hexo博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。附沙箱环境介绍：https://docs.open.alipay.com/200/105311 准备工作创建开发应用1.蚂蚁金服开放平台-开发进入">
 <meta name="keywords" content="Java,支付宝">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java接入支付宝网站扫码支付+单笔转账">
-<meta property="og:url" content="http://yoursite.com/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/index.html">
+<meta property="og:url" content="http://zhangcheng.fun/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/index.html">
 <meta property="og:site_name" content="尘曲|hexo博客">
 <meta property="og:description" content="前言项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。附沙箱环境介绍：https://docs.open.alipay.com/200/105311 准备工作创建开发应用1.蚂蚁金服开放平台-开发进入">
 <meta property="og:locale" content="zh-Hans">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/yingyong.png">
 <meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/aliPayDemo.png">
 <meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/aliconfig.png">
-<meta property="og:updated_time" content="2018-05-03T05:26:59.688Z">
+<meta property="og:updated_time" content="2018-05-03T07:21:25.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java接入支付宝网站扫码支付+单笔转账">
 <meta name="twitter:description" content="前言项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。附沙箱环境介绍：https://docs.open.alipay.com/200/105311 准备工作创建开发应用1.蚂蚁金服开放平台-开发进入">
@@ -67,10 +67,10 @@ var _hmt = _hmt || [];
 			<img src="/img/touxiang.JPG" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">尘曲</a></h1>
+		  <h1 class="header-author"><a href="/">CHENQU</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">关我屁事。管你屁事。离我远点。</p>
+		<p class="header-subtitle">既然开始了，就坚持到底。</p>
 		
 
 		<nav class="header-menu">
@@ -121,10 +121,10 @@ var _hmt = _hmt || [];
 				<img src="/img/touxiang.JPG" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">尘曲</h1>
+			  <h1 class="header-author js-header-author">CHENQU</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>关我屁事。管你屁事。离我远点。<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>既然开始了，就坚持到底。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -192,7 +192,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/IMG_2039.JPG" style="width: 600px;"></p>
+        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/IMG_2039.JPG" style="width: 700px;"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a></p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><strong>创建开发应用</strong><br><strong>1.</strong>蚂蚁金服开放平台-开发进入（导航栏）-支付应用立即接入。<br><a id="more"></a><br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/%E7%AB%8B%E5%8D%B3%E6%8E%A5%E5%85%A5.PNG" alt="立即接入"><br><strong>2.</strong>填写相关信息创建一个开发应用，此时在开发者中心-我的应用 一栏下可以看到应用项，（我的应用为已上线状态，你的应该是开发中状态）如图：<br><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/yingyong.png" alt="创建应用图片"><br><strong>3.</strong>查看此应用，在左侧应用信息一栏，完善应用的名称、图标。配置应用公钥，然后获取根据应用公钥自动生成的支付宝公钥。</p>
 <blockquote>
@@ -313,7 +313,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zhangcheng.fun/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -325,6 +325,20 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/05/03/四月记事/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          四月记事
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -384,7 +398,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 尘曲
+    		&copy; 2018 CHENQU
     	</div>
 
       <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
@@ -525,7 +539,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">专心致志写bug的coder&lt;/br&gt;搭个博客记录一下学习之路&lt;/br&gt;&lt;/br&gt;</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">半吊子写代码的&lt;br/&gt;热爱旅行，心在路上，人在床上&lt;br/&gt;三分钟热度晚期、拖延症晚期患者&lt;br/&gt;&lt;br/&gt;文艺？有一点吧&lt;br/&gt;直男？有一点吧&lt;br/&gt;多数随性，异常随性&lt;br/&gt;&lt;br/&gt;</div>
   	  	
     	</section>
     
