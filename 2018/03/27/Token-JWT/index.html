@@ -8,18 +8,20 @@
   <link rel="dns-prefetch" href="http://zhangcheng.fun">
   <title>基于JWT的Token认证机制（JavaWeb例） | 尘曲|hexo博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的企">
+  <meta name="description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于JWT的Token认证机制（JavaWeb例）">
 <meta property="og:url" content="http://zhangcheng.fun/2018/03/27/Token-JWT/index.html">
 <meta property="og:site_name" content="尘曲|hexo博客">
-<meta property="og:description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的企">
+<meta property="og:description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-11T01:42:46.039Z">
+<meta property="og:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/data-1590455_1920.jpg">
+<meta property="og:updated_time" content="2018-05-12T09:15:53.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于JWT的Token认证机制（JavaWeb例）">
-<meta name="twitter:description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的企">
+<meta name="twitter:description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的">
+<meta name="twitter:image" content="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/data-1590455_1920.jpg">
   
     <link rel="alternative" href="/atom.xml" title="尘曲|hexo博客" type="application/atom+xml">
   
@@ -186,7 +188,8 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。</p>
+        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/data-1590455_1920.jpg" style="width: 600px"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。</p>
 <blockquote>
 <ul>
 <li>Session+Cookie不了解的话，建议出门左转百度一下。</li>
