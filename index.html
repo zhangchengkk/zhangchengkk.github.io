@@ -273,8 +273,9 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <!-- <img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/TIM%E5%9B%BE%E7%89%8720180505231556.jpg" style="width:500px;"> -->
-<p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=5039562&auto=1&height=66"></iframe><br><br></p>
-<h2 id="关于时间"><a href="#关于时间" class="headerlink" title="关于时间"></a>关于时间</h2><p>整个三月都在忙我接下的个人项目，舍弃所有的活动和休闲时间，疯狂写代码，整个月的日平均睡眠不会超过五小时。<br>这是第一件事让我有抗不下来的想法，自己作的一手好死。<br>好在熬过去了，当然，收获颇丰。<br>进入四月，突然觉得很累，哪怕是已经拖延了一个月的毕业设计，实在提不起兴趣。<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=5039562&auto=1&height=66"></iframe>
+
+<h2 id="关于时间"><a href="#关于时间" class="headerlink" title="关于时间"></a>关于时间</h2><p>整个三月都在忙我接下的个人项目，舍弃所有的活动和休闲时间，疯狂写代码，整个月的日平均睡眠不会超过五小时。<br>这是第一件事让我有抗不下来的想法，自己作的一手好死。<br>好在熬过去了，当然，收获颇丰。<br>进入四月，突然觉得很累，哪怕是已经拖延了一个月的毕业设计，实在提不起兴趣。</p>
         
           <a class="article-more-a" href="/2018/04/30/2018.3-4流水/#more">more >></a>
         
@@ -357,8 +358,7 @@ var _hmt = _hmt || [];
       
         <!-- 
 <img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/ecommerce-3021581_1920.jpg" style="width: 500px;">  -->
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。</p>
-<p>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用，获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习，或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a><br>博主开发的Java后端应用，SSM框架，接入了支付宝网站扫码支付，还有企业向个人账户单笔转账功能。具体实现往下看。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><strong>创建开发应用</strong><br><strong>1.</strong>蚂蚁金服开放平台-开发进入（导航栏）-支付应用立即接入。<br>
         
           <a class="article-more-a" href="/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/#more">more >></a>
@@ -444,7 +444,8 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/data-1590455_1920.jpg" style="width: 500px"></p>
+        <!-- 
+<img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/data-1590455_1920.jpg" style="width: 500px"> -->
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。</p>
 <blockquote>
 <ul>
@@ -453,6 +454,7 @@ var _hmt = _hmt || [];
 <li>Token的认证方式有很多，JWT更适合一些认证权限管理的企业应用。</li>
 </ul>
 </blockquote>
+<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><p>1.客户端通过正确的用户名密码登陆，服务器后端将用户个人信息（一般还包括一段有效时长，用于验证登陆有效期）+自定义的密钥加密成一个Token字符串，返回给客户端。<br>2.客户端接受此加密字符串，存进Cookie或者Local Storage中，此后每次向服务器请求都携带此Token。<br>3.服务器对每次请求设置验证，将客户端发送的Token字符串解密成原始数据。验证用户身份和登陆有效时长，两者都通过则放行。<br>
         
           <a class="article-more-a" href="/2018/03/27/Token-JWT/#more">more >></a>
         
