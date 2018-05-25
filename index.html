@@ -72,6 +72,8 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/photos/">相册</a></li>
 	        
+				<li><a href="/1995/05/22/留言板/">留言板</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -124,6 +126,8 @@ var _hmt = _hmt || [];
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -139,12 +143,14 @@ var _hmt = _hmt || [];
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/photos/">相册</a></li>
+					<li style="width: 33.333333333333336%"><a href="/photos/">相册</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/1995/05/22/留言板/">留言板</a></li>
 		        
 				</ul>
 			</nav>
@@ -356,10 +362,9 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- 
-<img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/ecommerce-3021581_1920.jpg" style="width: 500px;">  -->
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用，获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习，或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a><br>博主开发的Java后端应用，SSM框架，接入了支付宝网站扫码支付，还有企业向个人账户单笔转账功能。具体实现往下看。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><strong>创建开发应用</strong><br><strong>1.</strong>蚂蚁金服开放平台-开发进入（导航栏）-支付应用立即接入。<br>
+        <!-- <img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/ecommerce-3021581_1920.jpg" style="width: 500px;">  -->
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中正式接入支付宝支付需要企业与支付宝完成签约，然后在蚂蚁金服开放平台创建开发应用，获取对应的appid以及应用私钥、公钥的信息。<br>但支付宝提供沙箱环境供新手学习，或者开发者开发过程中调试使用，在调试完成后，只要将沙箱环境配置换成正式应用即可上线使用。<br>附沙箱环境介绍：<a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a></p>
+<p>博主开发的Java后端应用，SSM框架，接入了支付宝网站扫码支付，还有企业向个人账户单笔转账功能。具体实现往下看。<br>
         
           <a class="article-more-a" href="/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/#more">more >></a>
         
@@ -453,7 +458,6 @@ var _hmt = _hmt || [];
 <li>Token的认证方式有很多，JWT更适合一些认证权限管理的企业应用。</li>
 </ul>
 </blockquote>
-<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><p>1.客户端通过正确的用户名密码登陆，服务器后端将用户个人信息（一般还包括一段有效时长，用于验证登陆有效期）+自定义的密钥加密成一个Token字符串，返回给客户端。<br>
         
           <a class="article-more-a" href="/2018/03/27/Token-JWT/#more">more >></a>
         
@@ -480,6 +484,91 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/27/Token-JWT/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-留言板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/1995/05/22/留言板/">留言板</a>
+    </h1>
+  
+
+
+        <!-- 显示阅读和评论数 -->
+        
+
+
+        
+        <a href="/1995/05/22/留言板/" class="archive-article-date">
+  	<time datetime="1995-05-22T01:49:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>1995-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://hexo-1256458540.cos.ap-shanghai.myqcloud.com/hexo-blog/5833050763a03f15bb0c8246f330b8a5.jpg" style="width:700px"></p>
+<blockquote>
+<ul>
+<li><h3 id="So-beautiful-the-world-and-you-are"><a href="#So-beautiful-the-world-and-you-are" class="headerlink" title="So beautiful the world,and you are."></a><em>So beautiful the world,and you are.</em></h3></li>
+</ul>
+</blockquote>
+<p>E-mail: zhangcheng404@126.com<br>欢迎留言。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">留言板</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/1995/05/22/留言板/">展开全文 >></a>
         </p>
       
 
@@ -615,6 +704,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">支付宝</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
               </li>
              
               <li class="article-tag-list-item">

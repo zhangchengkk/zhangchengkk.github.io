@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="尘曲的个人博客">
 <meta property="og:description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-23T09:15:17.968Z">
+<meta property="og:updated_time" content="2018-05-25T02:20:02.198Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于JWT的Token认证机制">
 <meta name="twitter:description" content="前言在之前的项目中一直采用session去验证用户身份。最近了解了Token认证的方法，查阅了相关资料并在实际项目中用了，在此记录一下。   Session+Cookie不了解的话，建议出门左转百度一下。 Session是有状态的，且需要将Session信息存储在数据库或者内存中。Token是无状态的且无需存储，主要是加密与解密的过程。 Token的认证方式有很多，JWT更适合一些认证权限管理的">
@@ -74,6 +74,8 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/photos/">相册</a></li>
 	        
+				<li><a href="/1995/05/22/留言板/">留言板</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -126,6 +128,8 @@ var _hmt = _hmt || [];
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -141,12 +145,14 @@ var _hmt = _hmt || [];
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/photos/">相册</a></li>
+					<li style="width: 33.333333333333336%"><a href="/photos/">相册</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/1995/05/22/留言板/">留言板</a></li>
 		        
 				</ul>
 			</nav>
@@ -195,7 +201,8 @@ var _hmt = _hmt || [];
 <li>Token的认证方式有很多，JWT更适合一些认证权限管理的企业应用。</li>
 </ul>
 </blockquote>
-<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><p>1.客户端通过正确的用户名密码登陆，服务器后端将用户个人信息（一般还包括一段有效时长，用于验证登陆有效期）+自定义的密钥加密成一个Token字符串，返回给客户端。<br><a id="more"></a><br>2.客户端接受此加密字符串，存进Cookie或者Local Storage中，此后每次向服务器请求都携带此Token。<br>3.服务器对每次请求设置验证，将客户端发送的Token字符串解密成原始数据。验证用户身份和登陆有效时长，两者都通过则放行。</p>
+<a id="more"></a>
+<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><p>1.客户端通过正确的用户名密码登陆，服务器后端将用户个人信息（一般还包括一段有效时长，用于验证登陆有效期）+自定义的密钥加密成一个Token字符串，返回给客户端。<br>2.客户端接受此加密字符串，存进Cookie或者Local Storage中，此后每次向服务器请求都携带此Token。<br>3.服务器对每次请求设置验证，将客户端发送的Token字符串解密成原始数据。验证用户身份和登陆有效时长，两者都通过则放行。</p>
 <h2 id="JWT加密过程"><a href="#JWT加密过程" class="headerlink" title="JWT加密过程"></a>JWT加密过程</h2><p>JWT包含三个部分：header，payload，signature。<br>header包含两部分，Token的类型以及使用的加密算法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;type&quot;:&quot;JWT&quot;</span><br><span class="line">&quot;alg&quot;:&quot;HS256&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>payload中是Token的具体内容，以下为例，可以添加或删减。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;iss&quot;:&quot;&quot;    //发行者</span><br><span class="line">&quot;sub&quot;:&quot;&quot;    //主题</span><br><span class="line">&quot;aud&quot;:&quot;&quot;    //观众</span><br><span class="line">&quot;exp&quot;:1416797419    //过期时间戳</span><br><span class="line">&quot;nbf&quot;:1416797419    //当前时间在nbf之前，Token不被接受</span><br><span class="line">&quot;iat&quot;:1416797419    // 发行时间戳</span><br><span class="line">&quot;jti&quot;:      // JWT id</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>signature签名由header和payload分别base64编码后通过”.”连接形成。</p>
@@ -301,6 +308,11 @@ var _hmt = _hmt || [];
     </a>
   
   
+    <a href="/1995/05/22/留言板/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">留言板</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
 </nav>
 
 
@@ -361,7 +373,7 @@ var _hmt = _hmt || [];
             verify: verify,
             app_id: "LYW6bsU6faXYIWRvKd7rdCGj-gzGzoHsz",
             app_key: "Iimma9tgkwVOKt5PHMzosqBu",
-            placeholder: "雷猴,有啥想说的...（方便的话请填写昵称，需回复请填写邮箱）",
+            placeholder: "雷猴,有啥想说的...（需回复请填写邮箱）",
             avatar: "",
             avatar_cdn: "https://sdn.geekzu.org/avatar/",
             pageSize: 15
@@ -478,6 +490,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">支付宝</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
               </li>
              
               <li class="article-tag-list-item">
