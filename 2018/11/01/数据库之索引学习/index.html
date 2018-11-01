@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="尘曲的个人博客">
 <meta property="og:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T15:35:50.569Z">
+<meta property="og:updated_time" content="2018-11-01T15:43:38.164Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之索引学习">
 <meta name="twitter:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
@@ -202,7 +202,8 @@ https://my.oschina.net/chener/blog/1603098 --></p>
 <p><strong>二级索引</strong> （可理解成等价于非聚簇索引）<br> 索引中存放的是数据行的主键，实际数据行需要根据主键回表查询。非聚簇索引一般采用二级索引的方式。<br> 例：主键是聚集索引，唯一索引、普通索引等都是二级索引。<br>参考：<a href="https://blog.csdn.net/jijianshuai/article/details/79084874" target="_blank" rel="noopener">https://blog.csdn.net/jijianshuai/article/details/79084874</a></p>
 <h2 id="其他的概念"><a href="#其他的概念" class="headerlink" title="其他的概念"></a>其他的概念</h2><p>1.对于a、b、c列分别创建的的三个索引叫做单列索引，使用[a、b、c]一起创建的一个索引叫做多列索引。</p>
 <p>2.最左匹配原则<br> 根据查询条件中的列从左往右依次匹配索引，遇到范围查询条件则停止匹配（包含第一个范围条件）。<br> 例如：<br> user表在[a、b、c]上有多列索引，检索sql语句：select * from user where a=1 and b&gt;1 and c=1<br> 只能匹配 a、b两个索引。</p>
-<p>3.自动优化查询<br> 数据库会自动调整查询条件的多项列值，来匹配尽可能多的索引项。<br> 例如：现有多列索引[a、b、c]，select <em> from user where c&gt;1 and a&gt;1 and b=1;<br> 自动优化后： select </em> from user where a=1 and b&gt;1 and c&gt;1;<br> 也就是说，实际编写sql语句无需考虑where中多个条件的排列顺序。</p>
+<p>3.自动优化查询<br> 数据库会自动调整查询条件的多项列值，来匹配尽可能多的索引项。<br> 例如：现有多列索引[a、b、c]，select * from user where c&gt;1 and a&gt;1 and b=1;</p>
+<p> 自动优化后： select * from user where a=1 and b&gt;1 and c&gt;1;<br> 也就是说，实际编写sql语句无需考虑where中多个条件的排列顺序。</p>
 <p>4.覆盖索引<br> 需要查询的值就是叶子节点中存储的索引列，无需回表查询。<br> 例如：<br> user表创建a列索引，select a from user where a&gt;1 将直接从叶子节点获取列值，无需返回表中获取整行数据。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.索引的好处是能够提高检索的速度，因此可以在查询语句中高频出现的列值上创建索引。</p>
 <p>2.索引本身是需要物理存储空间的，且索引结构与表数据相关。插入、删除、修改也会导致索引结构修改，降低维护效率。</p>
@@ -464,6 +465,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -473,10 +478,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
               </li>
              
               <li class="article-tag-list-item">
