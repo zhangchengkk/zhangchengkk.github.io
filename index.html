@@ -167,6 +167,250 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-数据库之索引学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/01/数据库之索引学习/">数据库之索引学习</a>
+    </h1>
+  
+
+
+        <!-- 显示阅读和评论数 -->
+        
+
+
+        
+        <a href="/2018/11/01/数据库之索引学习/" class="archive-article-date">
+  	<time datetime="2018-11-01T14:52:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么叫做数据库索引？"><a href="#什么叫做数据库索引？" class="headerlink" title="什么叫做数据库索引？"></a>什么叫做数据库索引？</h2><p>索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。<br>索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。</p>
+<p>通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查找的数据。</p>
+<h2 id="Hash索引和B-树索引"><a href="#Hash索引和B-树索引" class="headerlink" title="Hash索引和B+树索引"></a>Hash索引和B+树索引</h2><p>哈希索引<br>利用哈希算法将列值换算成哈希值，检索时直接根据哈希值定位结果值。<br>缺点：<br> 哈希值本身是无序的，因此无法利用索引进行排序<br> 不支持范围查询<br> 不支持最左匹配原则<br> 由于使用哈希算法引发的哈希碰撞问题，导致效率下降<br>B+树索引<br>使用数据结构中的B+树作为索引的存储结构。</p>
+<p>Mysql的InnoDB存储引擎默认采用B+树索引，有时也会根据情况自动使用哈希索引，我们无法干预。<br>B+树相关介绍：<br><a href="https://www.cnblogs.com/zengkefu/p/5647279.html" target="_blank" rel="noopener">https://www.cnblogs.com/zengkefu/p/5647279.html</a><br><a href="https://blog.csdn.net/ifollowrivers/article/details/73614549" target="_blank" rel="noopener">https://blog.csdn.net/ifollowrivers/article/details/73614549</a><br><a href="https://my.oschina.net/chener/blog/1603098" target="_blank" rel="noopener">https://my.oschina.net/chener/blog/1603098</a></p>
+<h2 id="聚集索引、非聚集索引"><a href="#聚集索引、非聚集索引" class="headerlink" title="聚集索引、非聚集索引"></a>聚集索引、非聚集索引</h2><p>聚集索引（聚簇索引）<br> 数据行的物理存储顺序与列值（一般是主键）的逻辑顺序一致，一个表中只能有一个聚集索引。<br> 索引和数据存储在一起，在同一个B+树中。<br> 也就是说，数据根据主键值顺序存储，主键唯一，聚簇索引自然唯一。<br>非聚集索引<br> 索引数据和存储数据分离，叶子节点只存储主键和列值。<br> 该索引的逻辑顺序与物理存储顺序不一致，一个表可以拥有多个非聚簇索引。<br>Mysql中InnoDB引擎的主键索引为聚簇索引，MyISAM存储引擎采用非聚集索引</p>
+<p>二级索引 （可理解成等价于非聚簇索引）<br> 索引中存放的是数据行的主键，实际数据行需要根据主键回表查询。非聚簇索引一般采用二级索引的方式。<br> 例：主键是聚集索引，唯一索引、普通索引等都是二级索引。<br>参考：<a href="https://blog.csdn.net/jijianshuai/article/details/79084874" target="_blank" rel="noopener">https://blog.csdn.net/jijianshuai/article/details/79084874</a></p>
+<h2 id="其他的概念"><a href="#其他的概念" class="headerlink" title="其他的概念"></a>其他的概念</h2><p>1.对于a、b、c列分别创建的的三个索引叫做单列索引，使用[a、b、c]一起创建的一个索引叫做多列索引。<br>2.最左匹配原则<br> 根据查询条件中的列从左往右依次匹配索引，遇到范围查询条件则停止匹配（包含第一个范围条件）。<br> 例如：<br> user表在[a、b、c]上有多列索引，检索sql语句：select <em> from user where a=1 and b&gt;1 and c=1<br> 只能匹配 a、b两个索引。<br>3.自动优化查询<br> 数据库会自动调整查询条件的多项列值，来匹配尽可能多的索引项。<br> 例如：现有多列索引[a、b、c]，select </em> from user where c&gt;1 and a&gt;1 and b=1;<br> 自动优化后： select * from user where a=1 and b&gt;1 and c&gt;1;<br> 也就是说，实际编写sql语句无需考虑where中多个条件的排列顺序。<br>4.覆盖索引<br> 需要查询的值就是叶子节点中存储的索引列，无需回表查询。<br> 例如：<br> user表创建a列索引，select a from user where a&gt;1 将直接从叶子节点获取列值，无需返回表中获取整行数据。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.索引的好处是能够提高检索的速度，因此可以在查询语句中高频出现的列值上创建索引。<br>2.索引本身是需要物理存储空间的，且索引结构与表数据相关。插入、删除、修改也会导致索引结构修改，降低维护效率。<br>3.对于已有a列索引，现需创建a、b多列索引，直接在a索引的基础上添加b更好。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/01/数据库之索引学习/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-数据库之锁学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/01/数据库之锁学习/">数据库之锁学习</a>
+    </h1>
+  
+
+
+        <!-- 显示阅读和评论数 -->
+        
+
+
+        
+        <a href="/2018/11/01/数据库之锁学习/" class="archive-article-date">
+  	<time datetime="2018-11-01T14:51:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>按使用方式：<br>  乐观锁<br>  悲观锁<br>按粒度：<br>  表级锁<br>    表共享读锁<br>    表独占写锁<br>  行级锁<br>    共享锁（S）<br>    排他锁(X)<br>  页级锁</p>
+<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><p><em>乐观锁</em>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。</p>
+<p><em>悲观锁</em>：悲观锁则悲观的认为总是会发生并发问题，每次操作都通过加锁（表锁、行锁）来保证前后数据的一致性。<br><strong>读取频繁使用乐观锁，写入频繁使用悲观锁。</strong></p>
+<h2 id="三、表锁"><a href="#三、表锁" class="headerlink" title="三、表锁"></a>三、表锁</h2><ul>
+<li>表锁<ul>
+<li>开销小，加锁块；锁定整张表，不会发生死锁，锁冲突概率低，并发度低</li>
+</ul>
+</li>
+<li>行锁<ul>
+<li>开销大，加锁慢；锁定数据行，易发生死锁，锁冲突概率高，并发度高</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>MyISAM存储引擎只支持表锁，不支持事务；InnoDB支持表锁和行锁，支持事务。<br>InnoDB行锁是通过索引上的索引项来实现的，这一点ＭySQL与Oracle不同，后者是通过在数据中对相应数据行加锁来实现的。<br>InnoDB这种行锁实现特点意味者：只有通过索引条件检索数据，InnoDB才会使用行级锁，否则，InnoDB将使用表锁！</p>
+</blockquote>
+<p>表锁分为：</p>
+<ul>
+<li><p>表共享读锁（Table Read Lock） </p>
+<figure class="highlight plain"><figcaption><span>TABLE user READ;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表独占写锁 （Table Wirte Lock） </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LOCAK TABLE user WRITE;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>兼容情况</th>
+<th>none</th>
+<th>读锁</th>
+<th>写锁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读锁</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td></td>
+</tr>
+<tr>
+<td>写锁</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>读读不阻塞</strong>：线程A加读锁，线程B可以读取数据<br><strong>读写阻塞</strong>：线程A加读锁，线程B无法修改数据<br><strong>写写阻塞</strong>：线程A加写锁，线程B既无法读取数据也无法修改数据</p>
+<h2 id="四、行锁"><a href="#四、行锁" class="headerlink" title="四、行锁"></a>四、行锁</h2><p>InnoDB作为Mysql的默认存储引擎，且支持事务与行锁，成为我们最常用的存储引擎。<br>InnoDB支持两种类型的行锁：</p>
+<ul>
+<li><p>共享锁（S锁）：共享锁就是多个事务对于同一数据可以共享一把锁，都能访问到数据，但是只能读不能修改。</p>
+<ul>
+<li>也叫做读锁：读锁是共享的，多个客户可以同时读取同一个资源，但不允许其他客户修改.<br><code>select * from user where id&gt;10 lock in share mode;</code></li>
+</ul>
+</li>
+<li><p>排他锁（X锁）：排他锁就是不能与其他锁并存，如一个事务获取了一个数据行的排他锁，其他事务就不能再获取该行的其他锁，包括共享锁和排他锁，但是获取排他锁的事务是可以对数据就行读取和修改</p>
+<ul>
+<li>也叫做写锁：写锁是排他的，写锁会阻塞其他的写锁和读锁。<br><code>select * from user where id&gt;10 for update;</code><h2 id="五、MVCC与事务的隔离机制"><a href="#五、MVCC与事务的隔离机制" class="headerlink" title="五、MVCC与事务的隔离机制"></a>五、MVCC与事务的隔离机制</h2>MVCC（Multi-Version Concurrency Control）多版本并发控制，使用多版本号来解决数据的隔离问题。主要是通过保存数据是在某个时间点的快照来实现。<br>Mysql的MVCC只在read committed和repeatable read两个隔离级别下工作。<br>数据库的隔离级别有四种：</li>
+</ul>
+</li>
+<li>Read uncommitted<ul>
+<li>会出现脏读、不可重复读、幻读</li>
+</ul>
+</li>
+<li>Read committed<ul>
+<li>会出现不可重复读、幻读</li>
+</ul>
+</li>
+<li>Repeatable read<ul>
+<li>会出现幻读（Mysql中配合间隙锁可避免）</li>
+</ul>
+</li>
+<li>Serializable<ul>
+<li>事务串行，避免上述问题</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><code>Read uncommitted</code>会出现的问题：脏读。<br>脏读是指一个事务读取到另一个事务提交之前的数据。</p>
+<h2 id="事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><a href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。" class="headerlink" title=" 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"></a><em> 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</em></h2><p><code>Read committed</code>通过实现语句级别的快照，无法读取事务未提交的数据来避免脏读，这样每次读取的都是最新的数据。<br>但<code>Read committed</code>还有不可重复读的问题，即在一个事务两次读取操作的间隙，另一个事务执行了修改操作，导致前一个事务的两次读取数据不一致。</p>
+<h2 id="事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><a href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。" class="headerlink" title=" 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"></a><em> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</em></h2><p><code>Repeatable read</code>实现事务级别的快照。每次读取的都是当前事务版本的快照，即使其他事务修改，也不会反映到当前事务中。</p>
+<blockquote>
+<p>InnoDB的MVCC是通过在每行记录的后面保存两个隐藏的列来实现的，一列保存行的创建时间，一列保存了行的过期时间（或删除时间）。<br>但存储的并不是真正的时间，而是系统的版本号。每开始一个新的事务，系统版本号就会递增。事务开始时的系统版本号就是这个事务的版本号，用来和查询的每行记录的版本号进行比较。<br>select: 1.InnoDB只查找版本早于当前事务版本的数据行（行的系统版本小于等于事务的系统版本号）。2.行的删除号要么未定义，要么大于当前事务版本号，这样可以确保事务读取到的行，在事务开始前未被删除。<br>insert: InnoDB为新插入的每一行保存当前系统版本号作为行版本号。<br>delete: InnoDB为删除的每一行保存当前系统版本号作为行删除标识。<br>update: InnoDB为修改的每一行新纪录，保存当前系统版本号为行版本号，同时保存当前系统版本号到原来的行作为行删除标识。</p>
+</blockquote>
+<p>但此隔离机制存在幻读：一个事务读取了其他事务新插入的数据。<br><em>不可重复读与幻读的区别：不可重复度重点是修改，幻读重点是插入或删除了数据。</em></p>
+<h2 id="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><a href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。" class="headerlink" title="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。"></a><em>在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</em></h2><p>Serializable：所有事务串行操作，避免以上情况。<br><em>处理事务的吞吐量低，严重浪费数据库的性能，因此要慎用此事务隔离级别。</em></p>
+<h2 id="间隙锁GAP"><a href="#间隙锁GAP" class="headerlink" title="间隙锁GAP"></a>间隙锁GAP</h2><p>当我们使用范围条件检索或更新数据时，InnoDB会给所有范围内的数据加锁，包括表中并不存在的数据。<br>例如user表中存在id为[1-101]数据<br><code>select password from user where id between 100 and 200；</code><br>除了id为101的数据被加锁，id[102,199]不存在的数据同样被加锁，此时如果另一个事务需要新插入id=102的数据，就必须等待上一个事务结束。</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>说到数据库锁就不得不说死锁，死锁不仅存在于数据库中，在很多资源竞争的场合下都会出现死锁。<br>死锁发生的四个必要条件：</p>
+<ul>
+<li>互斥条件（Mutual exclusion）：资源不能被共享，只能由一个进程使用。</li>
+<li>请求与保持条件（Hold and wait）：已经得到资源的进程可以再次申请新的资源。</li>
+<li>非剥夺条件（No pre-emption）：已经分配的资源不能从相应的进程中被强制地剥夺。</li>
+<li>循环等待条件（Circular wait）：系统中若干进程组成环路，该环路中每个进程都在等待相邻进程正占用的资源。<br><em>例如两个或两个以上的事务同时想要获取对方上锁的资源，就会形成一个最简单的死锁。</em><br>死锁不可能100%避免，但我们可以通过很多操作提前预防死锁，尽可能降低死锁发生的概率：</li>
+<li>在可能的情况下，降低并发量。</li>
+<li>将事务的粒度降低，事务越大越容易发生死锁。</li>
+<li>降低事务隔离级别。</li>
+</ul>
+<h2 id="数据库锁总结"><a href="#数据库锁总结" class="headerlink" title="数据库锁总结"></a>数据库锁总结</h2><p>虽然说了很多关于数据库锁的内容，但锁在数据库中大部分都是隐式的，正常编码的程序一样可以正常运行。<br>主要的目的在于我们主动通过锁来完善知识体系，以及在进行相关编码时调整姿势，提高程序效率、避免一些bug。<br>当然在一些高并发的场景或者需要对数据库进行定制化时，这些只是就是必不可少的了。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/01/数据库之锁学习/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-slurm安装配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -703,11 +947,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
+                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
+                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
               </li>
             
             <div class="clearfix"></div>

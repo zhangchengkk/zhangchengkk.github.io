@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zhangcheng.fun">
-  <title>Archives: 2018/4 | 尘曲的个人博客</title>
+  <title>数据库之锁学习 | 尘曲的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="尘曲的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="尘曲的个人博客">
-<meta property="og:url" content="http://zhangcheng.fun/archives/2018/04/index.html">
+  <meta name="description" content="一、锁的分类按使用方式：  乐观锁  悲观锁按粒度：  表级锁    表共享读锁    表独占写锁  行级锁    共享锁（S）    排他锁(X)  页级锁 二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库之锁学习">
+<meta property="og:url" content="http://zhangcheng.fun/2018/11/01/数据库之锁学习/index.html">
 <meta property="og:site_name" content="尘曲的个人博客">
-<meta property="og:description" content="尘曲的个人博客">
+<meta property="og:description" content="一、锁的分类按使用方式：  乐观锁  悲观锁按粒度：  表级锁    表共享读锁    表独占写锁  行级锁    共享锁（S）    排他锁(X)  页级锁 二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-01T15:01:33.673Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="尘曲的个人博客">
-<meta name="twitter:description" content="尘曲的个人博客">
+<meta name="twitter:title" content="数据库之锁学习">
+<meta name="twitter:description" content="一、锁的分类按使用方式：  乐观锁  悲观锁按粒度：  表级锁    表共享读锁    表独占写锁  行级锁    共享锁（S）    排他锁(X)  页级锁 二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来">
   
     <link rel="alternative" href="/atom.xml" title="尘曲的个人博客" type="application/atom+xml">
   
@@ -165,64 +166,292 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-数据库之锁学习" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/" class="archive-article-date">
-  	<time datetime="2018-04-10T06:09:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/10/JavaSSM接入支付宝网站扫码支付+单笔转账功能/">Java接入支付宝网站扫码支付+单笔转账</a>
+    <h1 class="article-title" itemprop="name">
+      数据库之锁学习
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">支付宝</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
+        <!-- 显示阅读和评论数 -->
+        
 
+
+        
+        <a href="/2018/11/01/数据库之锁学习/" class="archive-article-date">
+  	<time datetime="2018-11-01T14:51:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>按使用方式：<br>  乐观锁<br>  悲观锁<br>按粒度：<br>  表级锁<br>    表共享读锁<br>    表独占写锁<br>  行级锁<br>    共享锁（S）<br>    排他锁(X)<br>  页级锁</p>
+<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><p><em>乐观锁</em>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。</p>
+<p><em>悲观锁</em>：悲观锁则悲观的认为总是会发生并发问题，每次操作都通过加锁（表锁、行锁）来保证前后数据的一致性。<br><strong>读取频繁使用乐观锁，写入频繁使用悲观锁。</strong></p>
+<h2 id="三、表锁"><a href="#三、表锁" class="headerlink" title="三、表锁"></a>三、表锁</h2><ul>
+<li>表锁<ul>
+<li>开销小，加锁块；锁定整张表，不会发生死锁，锁冲突概率低，并发度低</li>
+</ul>
+</li>
+<li>行锁<ul>
+<li>开销大，加锁慢；锁定数据行，易发生死锁，锁冲突概率高，并发度高</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>MyISAM存储引擎只支持表锁，不支持事务；InnoDB支持表锁和行锁，支持事务。<br>InnoDB行锁是通过索引上的索引项来实现的，这一点ＭySQL与Oracle不同，后者是通过在数据中对相应数据行加锁来实现的。<br>InnoDB这种行锁实现特点意味者：只有通过索引条件检索数据，InnoDB才会使用行级锁，否则，InnoDB将使用表锁！</p>
+</blockquote>
+<p>表锁分为：</p>
+<ul>
+<li><p>表共享读锁（Table Read Lock） </p>
+<figure class="highlight plain"><figcaption><span>TABLE user READ;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表独占写锁 （Table Wirte Lock） </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LOCAK TABLE user WRITE;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>兼容情况</th>
+<th>none</th>
+<th>读锁</th>
+<th>写锁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读锁</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td></td>
+</tr>
+<tr>
+<td>写锁</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>读读不阻塞</strong>：线程A加读锁，线程B可以读取数据<br><strong>读写阻塞</strong>：线程A加读锁，线程B无法修改数据<br><strong>写写阻塞</strong>：线程A加写锁，线程B既无法读取数据也无法修改数据</p>
+<h2 id="四、行锁"><a href="#四、行锁" class="headerlink" title="四、行锁"></a>四、行锁</h2><p>InnoDB作为Mysql的默认存储引擎，且支持事务与行锁，成为我们最常用的存储引擎。<br>InnoDB支持两种类型的行锁：</p>
+<ul>
+<li><p>共享锁（S锁）：共享锁就是多个事务对于同一数据可以共享一把锁，都能访问到数据，但是只能读不能修改。</p>
+<ul>
+<li>也叫做读锁：读锁是共享的，多个客户可以同时读取同一个资源，但不允许其他客户修改.<br><code>select * from user where id&gt;10 lock in share mode;</code></li>
+</ul>
+</li>
+<li><p>排他锁（X锁）：排他锁就是不能与其他锁并存，如一个事务获取了一个数据行的排他锁，其他事务就不能再获取该行的其他锁，包括共享锁和排他锁，但是获取排他锁的事务是可以对数据就行读取和修改</p>
+<ul>
+<li>也叫做写锁：写锁是排他的，写锁会阻塞其他的写锁和读锁。<br><code>select * from user where id&gt;10 for update;</code><h2 id="五、MVCC与事务的隔离机制"><a href="#五、MVCC与事务的隔离机制" class="headerlink" title="五、MVCC与事务的隔离机制"></a>五、MVCC与事务的隔离机制</h2>MVCC（Multi-Version Concurrency Control）多版本并发控制，使用多版本号来解决数据的隔离问题。主要是通过保存数据是在某个时间点的快照来实现。<br>Mysql的MVCC只在read committed和repeatable read两个隔离级别下工作。<br>数据库的隔离级别有四种：</li>
+</ul>
+</li>
+<li>Read uncommitted<ul>
+<li>会出现脏读、不可重复读、幻读</li>
+</ul>
+</li>
+<li>Read committed<ul>
+<li>会出现不可重复读、幻读</li>
+</ul>
+</li>
+<li>Repeatable read<ul>
+<li>会出现幻读（Mysql中配合间隙锁可避免）</li>
+</ul>
+</li>
+<li>Serializable<ul>
+<li>事务串行，避免上述问题</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><code>Read uncommitted</code>会出现的问题：脏读。<br>脏读是指一个事务读取到另一个事务提交之前的数据。</p>
+<h2 id="事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><a href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。" class="headerlink" title=" 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"></a><em> 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</em></h2><p><code>Read committed</code>通过实现语句级别的快照，无法读取事务未提交的数据来避免脏读，这样每次读取的都是最新的数据。<br>但<code>Read committed</code>还有不可重复读的问题，即在一个事务两次读取操作的间隙，另一个事务执行了修改操作，导致前一个事务的两次读取数据不一致。</p>
+<h2 id="事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><a href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。" class="headerlink" title=" 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"></a><em> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</em></h2><p><code>Repeatable read</code>实现事务级别的快照。每次读取的都是当前事务版本的快照，即使其他事务修改，也不会反映到当前事务中。</p>
+<blockquote>
+<p>InnoDB的MVCC是通过在每行记录的后面保存两个隐藏的列来实现的，一列保存行的创建时间，一列保存了行的过期时间（或删除时间）。<br>但存储的并不是真正的时间，而是系统的版本号。每开始一个新的事务，系统版本号就会递增。事务开始时的系统版本号就是这个事务的版本号，用来和查询的每行记录的版本号进行比较。<br>select: 1.InnoDB只查找版本早于当前事务版本的数据行（行的系统版本小于等于事务的系统版本号）。2.行的删除号要么未定义，要么大于当前事务版本号，这样可以确保事务读取到的行，在事务开始前未被删除。<br>insert: InnoDB为新插入的每一行保存当前系统版本号作为行版本号。<br>delete: InnoDB为删除的每一行保存当前系统版本号作为行删除标识。<br>update: InnoDB为修改的每一行新纪录，保存当前系统版本号为行版本号，同时保存当前系统版本号到原来的行作为行删除标识。</p>
+</blockquote>
+<p>但此隔离机制存在幻读：一个事务读取了其他事务新插入的数据。<br><em>不可重复读与幻读的区别：不可重复度重点是修改，幻读重点是插入或删除了数据。</em></p>
+<h2 id="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><a href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。" class="headerlink" title="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。"></a><em>在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</em></h2><p>Serializable：所有事务串行操作，避免以上情况。<br><em>处理事务的吞吐量低，严重浪费数据库的性能，因此要慎用此事务隔离级别。</em></p>
+<h2 id="间隙锁GAP"><a href="#间隙锁GAP" class="headerlink" title="间隙锁GAP"></a>间隙锁GAP</h2><p>当我们使用范围条件检索或更新数据时，InnoDB会给所有范围内的数据加锁，包括表中并不存在的数据。<br>例如user表中存在id为[1-101]数据<br><code>select password from user where id between 100 and 200；</code><br>除了id为101的数据被加锁，id[102,199]不存在的数据同样被加锁，此时如果另一个事务需要新插入id=102的数据，就必须等待上一个事务结束。</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>说到数据库锁就不得不说死锁，死锁不仅存在于数据库中，在很多资源竞争的场合下都会出现死锁。<br>死锁发生的四个必要条件：</p>
+<ul>
+<li>互斥条件（Mutual exclusion）：资源不能被共享，只能由一个进程使用。</li>
+<li>请求与保持条件（Hold and wait）：已经得到资源的进程可以再次申请新的资源。</li>
+<li>非剥夺条件（No pre-emption）：已经分配的资源不能从相应的进程中被强制地剥夺。</li>
+<li>循环等待条件（Circular wait）：系统中若干进程组成环路，该环路中每个进程都在等待相邻进程正占用的资源。<br><em>例如两个或两个以上的事务同时想要获取对方上锁的资源，就会形成一个最简单的死锁。</em><br>死锁不可能100%避免，但我们可以通过很多操作提前预防死锁，尽可能降低死锁发生的概率：</li>
+<li>在可能的情况下，降低并发量。</li>
+<li>将事务的粒度降低，事务越大越容易发生死锁。</li>
+<li>降低事务隔离级别。</li>
+</ul>
+<h2 id="数据库锁总结"><a href="#数据库锁总结" class="headerlink" title="数据库锁总结"></a>数据库锁总结</h2><p>虽然说了很多关于数据库锁的内容，但锁在数据库中大部分都是隐式的，正常编码的程序一样可以正常运行。<br>主要的目的在于我们主动通过锁来完善知识体系，以及在进行相关编码时调整姿势，提高程序效率、避免一些bug。<br>当然在一些高并发的场景或者需要对数据库进行定制化时，这些只是就是必不可少的了。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zhangcheng.fun/2018/11/01/数据库之锁学习/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/11/01/数据库之索引学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          数据库之索引学习
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/06/14/slurm安装配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">slurm安装配置</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、锁的分类"><span class="toc-number">1.</span> <span class="toc-text">一、锁的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、乐观锁与悲观锁"><span class="toc-number">2.</span> <span class="toc-text">二、乐观锁与悲观锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、表锁"><span class="toc-number">3.</span> <span class="toc-text">三、表锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、行锁"><span class="toc-number">4.</span> <span class="toc-text">四、行锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、MVCC与事务的隔离机制"><span class="toc-number">5.</span> <span class="toc-text">五、MVCC与事务的隔离机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><span class="toc-number">6.</span> <span class="toc-text"> 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><span class="toc-number">7.</span> <span class="toc-text"> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><span class="toc-number">8.</span> <span class="toc-text">在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#间隙锁GAP"><span class="toc-number">9.</span> <span class="toc-text">间隙锁GAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-number">10.</span> <span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库锁总结"><span class="toc-number">11.</span> <span class="toc-text">数据库锁总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+  <section id="comments" class="comments">
+    <style>
+      .comments{margin:30px;padding:10px;background:#fff}
+      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+    </style>
+    <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "LYW6bsU6faXYIWRvKd7rdCGj-gzGzoHsz",
+            app_key: "Iimma9tgkwVOKt5PHMzosqBu",
+            placeholder: "雷猴,有啥想说的...（需回复请填写邮箱）",
+            avatar: "retro",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+</script>
+  </section>
+  
+
+  
+
+  
 
 
           </div>
@@ -257,8 +486,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
