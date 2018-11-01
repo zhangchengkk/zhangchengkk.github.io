@@ -286,7 +286,12 @@ var _hmt = _hmt || [];
 </li>
 <li>行级锁<ul>
 <li>共享锁（S）</li>
-<li>排他锁(X)<br>页级锁<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><strong>乐观锁</strong>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。
+<li>排他锁(X)</li>
+</ul>
+</li>
+<li>页级锁</li>
+</ul>
+<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><p><strong>乐观锁</strong>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。<br>
         
           <a class="article-more-a" href="/2018/11/01/数据库之锁学习/#more">more >></a>
         
@@ -874,11 +879,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
               </li>
              
               <li class="article-tag-list-item">
