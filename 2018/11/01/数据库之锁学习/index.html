@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://zhangcheng.fun">
   <title>数据库之锁学习 | 尘曲的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、锁的分类按使用方式：  乐观锁  悲观锁按粒度：  表级锁    表共享读锁    表独占写锁  行级锁    共享锁（S）    排他锁(X)  页级锁 二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来">
+  <meta name="description" content="一、锁的分类*按使用方式：  乐观锁 悲观锁*按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁（S） 排他锁(X)页级锁二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库之锁学习">
 <meta property="og:url" content="http://zhangcheng.fun/2018/11/01/数据库之锁学习/index.html">
 <meta property="og:site_name" content="尘曲的个人博客">
-<meta property="og:description" content="一、锁的分类按使用方式：  乐观锁  悲观锁按粒度：  表级锁    表共享读锁    表独占写锁  行级锁    共享锁（S）    排他锁(X)  页级锁 二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来">
+<meta property="og:description" content="一、锁的分类*按使用方式：  乐观锁 悲观锁*按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁（S） 排他锁(X)页级锁二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T15:01:33.673Z">
+<meta property="og:updated_time" content="2018-11-01T15:20:16.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之锁学习">
-<meta name="twitter:description" content="一、锁的分类按使用方式：  乐观锁  悲观锁按粒度：  表级锁    表共享读锁    表独占写锁  行级锁    共享锁（S）    排他锁(X)  页级锁 二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来">
+<meta name="twitter:description" content="一、锁的分类*按使用方式：  乐观锁 悲观锁*按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁（S） 排他锁(X)页级锁二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修">
   
     <link rel="alternative" href="/atom.xml" title="尘曲的个人博客" type="application/atom+xml">
   
@@ -191,9 +191,22 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>按使用方式：<br>  乐观锁<br>  悲观锁<br>按粒度：<br>  表级锁<br>    表共享读锁<br>    表独占写锁<br>  行级锁<br>    共享锁（S）<br>    排他锁(X)<br>  页级锁</p>
-<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><p><em>乐观锁</em>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。</p>
-<p><em>悲观锁</em>：悲观锁则悲观的认为总是会发生并发问题，每次操作都通过加锁（表锁、行锁）来保证前后数据的一致性。<br><strong>读取频繁使用乐观锁，写入频繁使用悲观锁。</strong></p>
+        <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>*按使用方式：</p>
+<ul>
+<li>乐观锁</li>
+<li>悲观锁<br>*按粒度：</li>
+<li>表级锁<ul>
+<li>表共享读锁</li>
+<li>表独占写锁</li>
+</ul>
+</li>
+<li>行级锁<ul>
+<li>共享锁（S）</li>
+<li>排他锁(X)<br>页级锁<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><strong>乐观锁</strong>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。<a id="more"></a>
+<strong>悲观锁</strong>：悲观锁则悲观的认为总是会发生并发问题，每次操作都通过加锁（表锁、行锁）来保证前后数据的一致性。<br><strong>读取频繁使用乐观锁，写入频繁使用悲观锁。</strong></li>
+</ul>
+</li>
+</ul>
 <h2 id="三、表锁"><a href="#三、表锁" class="headerlink" title="三、表锁"></a>三、表锁</h2><ul>
 <li>表锁<ul>
 <li>开销小，加锁块；锁定整张表，不会发生死锁，锁冲突概率低，并发度低</li>
@@ -210,7 +223,7 @@ var _hmt = _hmt || [];
 <p>表锁分为：</p>
 <ul>
 <li><p>表共享读锁（Table Read Lock） </p>
-<figure class="highlight plain"><figcaption><span>TABLE user READ;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LOCK TABLE user READ;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>表独占写锁 （Table Wirte Lock） </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LOCAK TABLE user WRITE;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
@@ -231,14 +244,12 @@ var _hmt = _hmt || [];
 <td>是</td>
 <td>是</td>
 <td>否</td>
-<td></td>
 </tr>
 <tr>
 <td>写锁</td>
 <td>是</td>
 <td>否</td>
 <td>否</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -252,9 +263,12 @@ var _hmt = _hmt || [];
 </li>
 <li><p>排他锁（X锁）：排他锁就是不能与其他锁并存，如一个事务获取了一个数据行的排他锁，其他事务就不能再获取该行的其他锁，包括共享锁和排他锁，但是获取排他锁的事务是可以对数据就行读取和修改</p>
 <ul>
-<li>也叫做写锁：写锁是排他的，写锁会阻塞其他的写锁和读锁。<br><code>select * from user where id&gt;10 for update;</code><h2 id="五、MVCC与事务的隔离机制"><a href="#五、MVCC与事务的隔离机制" class="headerlink" title="五、MVCC与事务的隔离机制"></a>五、MVCC与事务的隔离机制</h2>MVCC（Multi-Version Concurrency Control）多版本并发控制，使用多版本号来解决数据的隔离问题。主要是通过保存数据是在某个时间点的快照来实现。<br>Mysql的MVCC只在read committed和repeatable read两个隔离级别下工作。<br>数据库的隔离级别有四种：</li>
+<li>也叫做写锁：写锁是排他的，写锁会阻塞其他的写锁和读锁。<br><code>select * from user where id&gt;10 for update;</code></li>
 </ul>
 </li>
+</ul>
+<h2 id="五、MVCC与事务的隔离机制"><a href="#五、MVCC与事务的隔离机制" class="headerlink" title="五、MVCC与事务的隔离机制"></a>五、MVCC与事务的隔离机制</h2><p>MVCC（Multi-Version Concurrency Control）多版本并发控制，使用多版本号来解决数据的隔离问题。主要是通过保存数据是在某个时间点的快照来实现。<br>Mysql的MVCC只在read committed和repeatable read两个隔离级别下工作。<br>数据库的隔离级别有四种：</p>
+<ul>
 <li>Read uncommitted<ul>
 <li>会出现脏读、不可重复读、幻读</li>
 </ul>
@@ -274,10 +288,10 @@ var _hmt = _hmt || [];
 </ul>
 <hr>
 <p><code>Read uncommitted</code>会出现的问题：脏读。<br>脏读是指一个事务读取到另一个事务提交之前的数据。</p>
-<h2 id="事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><a href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。" class="headerlink" title=" 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"></a><em> 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</em></h2><p><code>Read committed</code>通过实现语句级别的快照，无法读取事务未提交的数据来避免脏读，这样每次读取的都是最新的数据。<br>但<code>Read committed</code>还有不可重复读的问题，即在一个事务两次读取操作的间隙，另一个事务执行了修改操作，导致前一个事务的两次读取数据不一致。</p>
-<h2 id="事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><a href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。" class="headerlink" title=" 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"></a><em> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</em></h2><p><code>Repeatable read</code>实现事务级别的快照。每次读取的都是当前事务版本的快照，即使其他事务修改，也不会反映到当前事务中。</p>
+<h2 id="事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><a href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。" class="headerlink" title=" 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"></a><strong><em> 事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</em></strong></h2><p><code>Read committed</code>通过实现语句级别的快照，无法读取事务未提交的数据来避免脏读，这样每次读取的都是最新的数据。<br>但<code>Read committed</code>还有不可重复读的问题，即在一个事务两次读取操作的间隙，另一个事务执行了修改操作，导致前一个事务的两次读取数据不一致。</p>
+<h2 id="事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><a href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。" class="headerlink" title=" 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"></a><strong><em> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</em></strong></h2><p><code>Repeatable read</code>实现事务级别的快照。每次读取的都是当前事务版本的快照，即使其他事务修改，也不会反映到当前事务中。</p>
 <blockquote>
-<p>InnoDB的MVCC是通过在每行记录的后面保存两个隐藏的列来实现的，一列保存行的创建时间，一列保存了行的过期时间（或删除时间）。<br>但存储的并不是真正的时间，而是系统的版本号。每开始一个新的事务，系统版本号就会递增。事务开始时的系统版本号就是这个事务的版本号，用来和查询的每行记录的版本号进行比较。<br>select: 1.InnoDB只查找版本早于当前事务版本的数据行（行的系统版本小于等于事务的系统版本号）。2.行的删除号要么未定义，要么大于当前事务版本号，这样可以确保事务读取到的行，在事务开始前未被删除。<br>insert: InnoDB为新插入的每一行保存当前系统版本号作为行版本号。<br>delete: InnoDB为删除的每一行保存当前系统版本号作为行删除标识。<br>update: InnoDB为修改的每一行新纪录，保存当前系统版本号为行版本号，同时保存当前系统版本号到原来的行作为行删除标识。</p>
+<p>InnoDB的MVCC是通过在每行记录的后面保存两个隐藏的列来实现的，一列保存行的创建时间，一列保存了行的过期时间（或删除时间）。<br>但存储的并不是真正的时间，而是系统的版本号。每开始一个新的事务，系统版本号就会递增。事务开始时的系统版本号就是这个事务的版本号，用来和查询的每行记录的版本号进行比较。<br><strong>select</strong>: 1.InnoDB只查找版本早于当前事务版本的数据行（行的系统版本小于等于事务的系统版本号）。2.行的删除号要么未定义，要么大于当前事务版本号，这样可以确保事务读取到的行，在事务开始前未被删除。<br><strong>insert</strong>: InnoDB为新插入的每一行保存当前系统版本号作为行版本号。<br><strong>delete</strong>: InnoDB为删除的每一行保存当前系统版本号作为行删除标识。<br><strong>update</strong>: InnoDB为修改的每一行新纪录，保存当前系统版本号为行版本号，同时保存当前系统版本号到原来的行作为行删除标识。</p>
 </blockquote>
 <p>但此隔离机制存在幻读：一个事务读取了其他事务新插入的数据。<br><em>不可重复读与幻读的区别：不可重复度重点是修改，幻读重点是插入或删除了数据。</em></p>
 <h2 id="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><a href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。" class="headerlink" title="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。"></a><em>在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</em></h2><p>Serializable：所有事务串行操作，避免以上情况。<br><em>处理事务的吞吐量低，严重浪费数据库的性能，因此要慎用此事务隔离级别。</em></p>
@@ -287,7 +301,11 @@ var _hmt = _hmt || [];
 <li>互斥条件（Mutual exclusion）：资源不能被共享，只能由一个进程使用。</li>
 <li>请求与保持条件（Hold and wait）：已经得到资源的进程可以再次申请新的资源。</li>
 <li>非剥夺条件（No pre-emption）：已经分配的资源不能从相应的进程中被强制地剥夺。</li>
-<li>循环等待条件（Circular wait）：系统中若干进程组成环路，该环路中每个进程都在等待相邻进程正占用的资源。<br><em>例如两个或两个以上的事务同时想要获取对方上锁的资源，就会形成一个最简单的死锁。</em><br>死锁不可能100%避免，但我们可以通过很多操作提前预防死锁，尽可能降低死锁发生的概率：</li>
+<li>循环等待条件（Circular wait）：系统中若干进程组成环路，该环路中每个进程都在等待相邻进程正占用的资源。</li>
+</ul>
+<p><em>例如两个或两个以上的事务同时想要获取对方上锁的资源，就会形成一个最简单的死锁。</em></p>
+<p>死锁不可能100%避免，但我们可以通过很多操作提前预防死锁，尽可能降低死锁发生的概率：</p>
+<ul>
 <li>在可能的情况下，降低并发量。</li>
 <li>将事务的粒度降低，事务越大越容易发生死锁。</li>
 <li>降低事务隔离级别。</li>
@@ -560,11 +578,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
+                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
+                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
               </li>
             
             <div class="clearfix"></div>

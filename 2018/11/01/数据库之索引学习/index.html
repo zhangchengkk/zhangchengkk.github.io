@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="尘曲的个人博客">
 <meta property="og:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T15:01:35.387Z">
+<meta property="og:updated_time" content="2018-11-01T15:21:08.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之索引学习">
 <meta name="twitter:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
@@ -193,8 +193,9 @@ var _hmt = _hmt || [];
       
         <h2 id="什么叫做数据库索引？"><a href="#什么叫做数据库索引？" class="headerlink" title="什么叫做数据库索引？"></a>什么叫做数据库索引？</h2><p>索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。<br>索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。</p>
 <p>通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查找的数据。</p>
-<h2 id="Hash索引和B-树索引"><a href="#Hash索引和B-树索引" class="headerlink" title="Hash索引和B+树索引"></a>Hash索引和B+树索引</h2><p>哈希索引<br>利用哈希算法将列值换算成哈希值，检索时直接根据哈希值定位结果值。<br>缺点：<br> 哈希值本身是无序的，因此无法利用索引进行排序<br> 不支持范围查询<br> 不支持最左匹配原则<br> 由于使用哈希算法引发的哈希碰撞问题，导致效率下降<br>B+树索引<br>使用数据结构中的B+树作为索引的存储结构。</p>
-<p>Mysql的InnoDB存储引擎默认采用B+树索引，有时也会根据情况自动使用哈希索引，我们无法干预。<br>B+树相关介绍：<br><a href="https://www.cnblogs.com/zengkefu/p/5647279.html" target="_blank" rel="noopener">https://www.cnblogs.com/zengkefu/p/5647279.html</a><br><a href="https://blog.csdn.net/ifollowrivers/article/details/73614549" target="_blank" rel="noopener">https://blog.csdn.net/ifollowrivers/article/details/73614549</a><br><a href="https://my.oschina.net/chener/blog/1603098" target="_blank" rel="noopener">https://my.oschina.net/chener/blog/1603098</a></p>
+<h2 id="Hash索引和B-树索引"><a href="#Hash索引和B-树索引" class="headerlink" title="Hash索引和B+树索引"></a>Hash索引和B+树索引</h2><p>哈希索引<br>利用哈希算法将列值换算成哈希值，检索时直接根据哈希值定位结果值。<br><a id="more"></a><br>缺点：<br> 哈希值本身是无序的，因此无法利用索引进行排序<br> 不支持范围查询<br> 不支持最左匹配原则<br> 由于使用哈希算法引发的哈希碰撞问题，导致效率下降<br>B+树索引<br>使用数据结构中的B+树作为索引的存储结构。</p>
+<p>Mysql的InnoDB存储引擎默认采用B+树索引，有时也会根据情况自动使用哈希索引，我们无法干预。<br>B+树相关介绍：<br><a href="https://www.cnblogs.com/zengkefu/p/5647279.html" target="_blank" rel="noopener">https://www.cnblogs.com/zengkefu/p/5647279.html</a><br><!-- https://blog.csdn.net/ifollowrivers/article/details/73614549
+https://my.oschina.net/chener/blog/1603098 --></p>
 <h2 id="聚集索引、非聚集索引"><a href="#聚集索引、非聚集索引" class="headerlink" title="聚集索引、非聚集索引"></a>聚集索引、非聚集索引</h2><p>聚集索引（聚簇索引）<br> 数据行的物理存储顺序与列值（一般是主键）的逻辑顺序一致，一个表中只能有一个聚集索引。<br> 索引和数据存储在一起，在同一个B+树中。<br> 也就是说，数据根据主键值顺序存储，主键唯一，聚簇索引自然唯一。<br>非聚集索引<br> 索引数据和存储数据分离，叶子节点只存储主键和列值。<br> 该索引的逻辑顺序与物理存储顺序不一致，一个表可以拥有多个非聚簇索引。<br>Mysql中InnoDB引擎的主键索引为聚簇索引，MyISAM存储引擎采用非聚集索引</p>
 <p>二级索引 （可理解成等价于非聚簇索引）<br> 索引中存放的是数据行的主键，实际数据行需要根据主键回表查询。非聚簇索引一般采用二级索引的方式。<br> 例：主键是聚集索引，唯一索引、普通索引等都是二级索引。<br>参考：<a href="https://blog.csdn.net/jijianshuai/article/details/79084874" target="_blank" rel="noopener">https://blog.csdn.net/jijianshuai/article/details/79084874</a></p>
 <h2 id="其他的概念"><a href="#其他的概念" class="headerlink" title="其他的概念"></a>其他的概念</h2><p>1.对于a、b、c列分别创建的的三个索引叫做单列索引，使用[a、b、c]一起创建的一个索引叫做多列索引。<br>2.最左匹配原则<br> 根据查询条件中的列从左往右依次匹配索引，遇到范围查询条件则停止匹配（包含第一个范围条件）。<br> 例如：<br> user表在[a、b、c]上有多列索引，检索sql语句：select <em> from user where a=1 and b&gt;1 and c=1<br> 只能匹配 a、b两个索引。<br>3.自动优化查询<br> 数据库会自动调整查询条件的多项列值，来匹配尽可能多的索引项。<br> 例如：现有多列索引[a、b、c]，select </em> from user where c&gt;1 and a&gt;1 and b=1;<br> 自动优化后： select * from user where a=1 and b&gt;1 and c&gt;1;<br> 也就是说，实际编写sql语句无需考虑where中多个条件的排列顺序。<br>4.覆盖索引<br> 需要查询的值就是叶子节点中存储的索引列，无需回表查询。<br> 例如：<br> user表创建a列索引，select a from user where a&gt;1 将直接从叶子节点获取列值，无需返回表中获取整行数据。</p>
@@ -457,11 +458,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
+                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
+                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
               </li>
             
             <div class="clearfix"></div>
