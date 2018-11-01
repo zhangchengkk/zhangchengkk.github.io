@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://zhangcheng.fun">
   <title>数据库之锁学习 | 尘曲的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、锁的分类*按使用方式：  乐观锁 悲观锁*按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁（S） 排他锁(X)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
+  <meta name="description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库之锁学习">
 <meta property="og:url" content="http://zhangcheng.fun/2018/11/01/数据库之锁学习/index.html">
 <meta property="og:site_name" content="尘曲的个人博客">
-<meta property="og:description" content="一、锁的分类*按使用方式：  乐观锁 悲观锁*按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁（S） 排他锁(X)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
+<meta property="og:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T15:33:02.662Z">
+<meta property="og:updated_time" content="2018-11-01T15:40:14.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之锁学习">
-<meta name="twitter:description" content="一、锁的分类*按使用方式：  乐观锁 悲观锁*按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁（S） 排他锁(X)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
+<meta name="twitter:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
   
     <link rel="alternative" href="/atom.xml" title="尘曲的个人博客" type="application/atom+xml">
   
@@ -192,23 +192,26 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>*按使用方式：</p>
+        <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>按使用方式：</p>
 <ul>
 <li>乐观锁</li>
-<li>悲观锁<br>*按粒度：</li>
+<li>悲观锁<br>按粒度：</li>
 <li>表级锁<ul>
 <li>表共享读锁</li>
 <li>表独占写锁</li>
 </ul>
 </li>
 <li>行级锁<ul>
-<li>共享锁（S）</li>
-<li>排他锁(X)</li>
+<li>共享锁(S锁)</li>
+<li>排他锁(X锁)</li>
 </ul>
 </li>
 <li>页级锁</li>
 </ul>
-<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><p><strong>乐观锁</strong>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。<br><a id="more"></a><br><strong>悲观锁</strong>：悲观锁则悲观的认为总是会发生并发问题，每次操作都通过加锁（表锁、行锁）来保证前后数据的一致性。<br><strong>读取频繁使用乐观锁，写入频繁使用悲观锁。</strong></p>
+<h2 id="二、乐观锁与悲观锁"><a href="#二、乐观锁与悲观锁" class="headerlink" title="二、乐观锁与悲观锁"></a>二、乐观锁与悲观锁</h2><p><strong>乐观锁</strong>：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。<br>处理方式：一般是在表中新增一个version字段用来记录数据被修改的次数，每次修改数据version值+1。当线程A第一次读取数据时version为1，当提交更新时会重新确认version字段是否为1，若不相等，放弃更新。<br><a id="more"></a><br><strong>悲观锁</strong>：悲观锁则悲观的认为总是会发生并发问题，每次操作都通过加锁（表锁、行锁）来保证前后数据的一致性。</p>
+<blockquote>
+<p>什么时候使用乐观锁？以及悲观锁？<br><strong>读取频繁使用乐观锁，写入频繁使用悲观锁。</strong></p>
+</blockquote>
 <h2 id="三、表锁"><a href="#三、表锁" class="headerlink" title="三、表锁"></a>三、表锁</h2><ul>
 <li>表锁<ul>
 <li>开销小，加锁块；锁定整张表，不会发生死锁，锁冲突概率低，并发度低</li>
@@ -290,8 +293,8 @@ var _hmt = _hmt || [];
 </ul>
 <hr>
 <p><code>Read uncommitted</code>会出现的问题：脏读。<br>脏读是指一个事务读取到另一个事务提交之前的数据。</p>
-<h2 id="事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><a href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。" class="headerlink" title="事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"></a><em>事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</em></h2><p><code>Read committed</code>通过实现语句级别的快照，无法读取事务未提交的数据来避免脏读，这样每次读取的都是最新的数据。<br>但<code>Read committed</code>还有不可重复读的问题，即在一个事务两次读取操作的间隙，另一个事务执行了修改操作，导致前一个事务的两次读取数据不一致。</p>
-<h2 id="事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><a href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。" class="headerlink" title=" 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"></a><em> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</em></h2><p><code>Repeatable read</code>实现事务级别的快照。每次读取的都是当前事务版本的快照，即使其他事务修改，也不会反映到当前事务中。</p>
+<h2 id="gt-事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><a href="#gt-事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。" class="headerlink" title="&gt;事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"></a>&gt;事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</h2><p><code>Read committed</code>通过实现语句级别的快照，无法读取事务未提交的数据来避免脏读，这样每次读取的都是最新的数据。<br>但<code>Read committed</code>还有不可重复读的问题，即在一个事务两次读取操作的间隙，另一个事务执行了修改操作，导致前一个事务的两次读取数据不一致。</p>
+<h2 id="gt-事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><a href="#gt-事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。" class="headerlink" title="&gt;事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"></a>&gt;事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</h2><p><code>Repeatable read</code>实现事务级别的快照。每次读取的都是当前事务版本的快照，即使其他事务修改，也不会反映到当前事务中。</p>
 <blockquote>
 <p>InnoDB的MVCC是通过在每行记录的后面保存两个隐藏的列来实现的，一列保存行的创建时间，一列保存了行的过期时间（或删除时间）。<br>但存储的并不是真正的时间，而是系统的版本号。每开始一个新的事务，系统版本号就会递增。事务开始时的系统版本号就是这个事务的版本号，用来和查询的每行记录的版本号进行比较。</p>
 <p><strong> <code>Repeatable read</code> 级别下增删改查的处理：</strong></p>
@@ -441,7 +444,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、锁的分类"><span class="toc-number">1.</span> <span class="toc-text">一、锁的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、乐观锁与悲观锁"><span class="toc-number">2.</span> <span class="toc-text">二、乐观锁与悲观锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、表锁"><span class="toc-number">3.</span> <span class="toc-text">三、表锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、行锁"><span class="toc-number">4.</span> <span class="toc-text">四、行锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、MVCC与事务的隔离机制"><span class="toc-number">5.</span> <span class="toc-text">五、MVCC与事务的隔离机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><span class="toc-number">6.</span> <span class="toc-text">事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><span class="toc-number">7.</span> <span class="toc-text"> 事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><span class="toc-number">8.</span> <span class="toc-text">在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#间隙锁GAP"><span class="toc-number">9.</span> <span class="toc-text">间隙锁GAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-number">10.</span> <span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库锁总结"><span class="toc-number">11.</span> <span class="toc-text">数据库锁总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、锁的分类"><span class="toc-number">1.</span> <span class="toc-text">一、锁的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、乐观锁与悲观锁"><span class="toc-number">2.</span> <span class="toc-text">二、乐观锁与悲观锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、表锁"><span class="toc-number">3.</span> <span class="toc-text">三、表锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、行锁"><span class="toc-number">4.</span> <span class="toc-text">四、行锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、MVCC与事务的隔离机制"><span class="toc-number">5.</span> <span class="toc-text">五、MVCC与事务的隔离机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gt-事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。"><span class="toc-number">6.</span> <span class="toc-text">&gt;事务A向余额为0元的账户充值500元，然后事务B读取账户余额为500元，接着事务A回滚了，账户实际还是0元。事务B读取的就是脏数据。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gt-事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。"><span class="toc-number">7.</span> <span class="toc-text">&gt;事务A先读取账户余额为500元，接着事务B消费500元导致账户余额为0元（事务完成commit），事务A再次读取账户为0元，这样同一个事务中的两次读取数据不一致。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><span class="toc-number">8.</span> <span class="toc-text">在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#间隙锁GAP"><span class="toc-number">9.</span> <span class="toc-text">间隙锁GAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-number">10.</span> <span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库锁总结"><span class="toc-number">11.</span> <span class="toc-text">数据库锁总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
