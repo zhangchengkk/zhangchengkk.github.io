@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://zhangcheng.fun">
   <title>数据库之索引学习 | 尘曲的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
+  <meta name="description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查找的">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库之索引学习">
 <meta property="og:url" content="http://zhangcheng.fun/2018/11/01/数据库之索引学习/index.html">
 <meta property="og:site_name" content="尘曲的个人博客">
-<meta property="og:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
+<meta property="og:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查找的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T15:43:38.164Z">
+<meta property="og:updated_time" content="2018-11-14T16:23:56.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之索引学习">
-<meta name="twitter:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查">
+<meta name="twitter:description" content="什么叫做数据库索引？索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他，则与在表中搜索所有的行相比，索引有助于更快地获取信息。索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。 通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查找的">
   
     <link rel="alternative" href="/atom.xml" title="尘曲的个人博客" type="application/atom+xml">
   
@@ -192,13 +192,13 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="什么叫做数据库索引？"><a href="#什么叫做数据库索引？" class="headerlink" title="什么叫做数据库索引？"></a>什么叫做数据库索引？</h2><p>索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。<br>索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。</p>
+        <h2 id="什么叫做数据库索引？"><a href="#什么叫做数据库索引？" class="headerlink" title="什么叫做数据库索引？"></a>什么叫做数据库索引？</h2><p>索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可快速访问数据库表中的特定信息。如果想按特定职员的姓来查找他，则与在表中搜索所有的行相比，索引有助于更快地获取信息。<br>索引的一个主要目的就是加快检索表中数据的方法，亦即能协助信息搜索者尽快的找到符合限制条件的记录ID的辅助数据结构。</p>
 <p>通俗一点的说，把数据库中的数据比作一本书里面的内容，索引就是目录，可以快速定位需要查找的数据。</p>
 <h2 id="Hash索引和B-树索引"><a href="#Hash索引和B-树索引" class="headerlink" title="Hash索引和B+树索引"></a>Hash索引和B+树索引</h2><h4 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h4><p>利用哈希算法将列值换算成哈希值，检索时直接根据哈希值定位结果值。<br><a id="more"></a><br><strong>缺点：</strong><br> 哈希值本身是无序的，因此无法利用索引进行排序<br> 不支持范围查询<br> 不支持最左匹配原则<br> 由于使用哈希算法引发的哈希碰撞问题，导致效率下降</p>
 <h4 id="B-树索引"><a href="#B-树索引" class="headerlink" title="B+树索引"></a>B+树索引</h4><p>使用数据结构中的B+树作为索引的存储结构。</p>
 <p>Mysql的InnoDB存储引擎默认采用B+树索引，有时也会根据情况自动使用哈希索引，我们无法干预。<br>B+树相关介绍：<a href="https://www.cnblogs.com/zengkefu/p/5647279.html" target="_blank" rel="noopener">https://www.cnblogs.com/zengkefu/p/5647279.html</a><br><!-- https://blog.csdn.net/ifollowrivers/article/details/73614549
 https://my.oschina.net/chener/blog/1603098 --></p>
-<h2 id="聚集索引、非聚集索引"><a href="#聚集索引、非聚集索引" class="headerlink" title="聚集索引、非聚集索引"></a>聚集索引、非聚集索引</h2><p><strong>聚集索引（聚簇索引）</strong><br> 数据行的物理存储顺序与列值（一般是主键）的逻辑顺序一致，一个表中只能有一个聚集索引。<br> 索引和数据存储在一起，在同一个B+树中。<br> 也就是说，数据根据主键值顺序存储，主键唯一，聚簇索引自然唯一。<br><strong>非聚集索引</strong><br> 索引数据和存储数据分离，叶子节点只存储主键和列值。<br> 该索引的逻辑顺序与物理存储顺序不一致，一个表可以拥有多个非聚簇索引。<br>Mysql中InnoDB引擎的主键索引为聚簇索引，MyISAM存储引擎采用非聚集索引</p>
+<h2 id="聚集索引、非聚集索引"><a href="#聚集索引、非聚集索引" class="headerlink" title="聚集索引、非聚集索引"></a>聚集索引、非聚集索引</h2><p><strong>聚集索引（聚簇索引）</strong><br> 数据行的物理存储顺序与列值（一般是主键）的逻辑顺序一致，一个表中只能有一个聚集索引。<br> 索引和数据存储在一起，在同一个B+树中。<br> 也就是说，数据根据主键值顺序存储，主键唯一，聚簇索引自然唯一。<br><strong>非聚集索引</strong><br> 索引数据和存储数据分离，叶子节点只存储主键和列值。<br> 该索引的逻辑顺序与物理存储顺序不一致，一个表可以拥有多个非聚簇索引。<br>Mysql中InnoDB引擎的主键索引为聚簇索引，MyISAM存储引擎采用非聚集索引<br>[此处应有图，之后补 -_-||]</p>
 <p><strong>二级索引</strong> （可理解成等价于非聚簇索引）<br> 索引中存放的是数据行的主键，实际数据行需要根据主键回表查询。非聚簇索引一般采用二级索引的方式。<br> 例：主键是聚集索引，唯一索引、普通索引等都是二级索引。<br>参考：<a href="https://blog.csdn.net/jijianshuai/article/details/79084874" target="_blank" rel="noopener">https://blog.csdn.net/jijianshuai/article/details/79084874</a></p>
 <h2 id="其他的概念"><a href="#其他的概念" class="headerlink" title="其他的概念"></a>其他的概念</h2><p>1.对于a、b、c列分别创建的的三个索引叫做单列索引，使用[a、b、c]一起创建的一个索引叫做多列索引。</p>
 <p>2.最左匹配原则<br> 根据查询条件中的列从左往右依次匹配索引，遇到范围查询条件则停止匹配（包含第一个范围条件）。<br> 例如：<br> user表在[a、b、c]上有多列索引，检索sql语句：select * from user where a=1 and b&gt;1 and c=1<br> 只能匹配 a、b两个索引。</p>
@@ -465,10 +465,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -481,11 +477,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
+                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
+                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
               </li>
             
             <div class="clearfix"></div>

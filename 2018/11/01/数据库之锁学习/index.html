@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="尘曲的个人博客">
 <meta property="og:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T15:47:22.418Z">
+<meta property="og:updated_time" content="2018-11-14T16:19:23.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之锁学习">
 <meta name="twitter:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
@@ -313,8 +313,9 @@ var _hmt = _hmt || [];
 <li><strong>update</strong>: InnoDB为修改的每一行新纪录，保存当前系统版本号为行版本号，同时保存当前系统版本号到原来的行作为行删除标识。</li>
 </ul>
 </blockquote>
-<p>但此隔离机制存在幻读：一个事务读取了其他事务新插入的数据。<br><em>不可重复读与幻读的区别：不可重复度重点是修改，幻读重点是插入或删除了数据。</em></p>
-<h2 id="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><a href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。" class="headerlink" title="在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。"></a><em>在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</em></h2><p>Serializable：所有事务串行操作，避免以上情况。<br><em>处理事务的吞吐量低，严重浪费数据库的性能，因此要慎用此事务隔离级别。</em></p>
+<p>但此隔离机制存在幻读：一个事务读取了其他事务新插入的数据。<br><em>不可重复读与幻读的区别：不可重复度重点是修改，幻读重点是插入或删除了数据。</em><br><em>在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</em></p>
+<hr>
+<p>Serializable：所有事务串行操作，避免以上情况。<br><em>处理事务的吞吐量低，严重浪费数据库的性能，因此要慎用此事务隔离级别。</em></p>
 <h2 id="间隙锁GAP"><a href="#间隙锁GAP" class="headerlink" title="间隙锁GAP"></a>间隙锁GAP</h2><p>当我们使用范围条件检索或更新数据时，InnoDB会给所有范围内的数据加锁，包括表中并不存在的数据。<br>例如user表中存在id为[1-101]数据<br><code>select password from user where id between 100 and 200；</code><br>除了id为101的数据被加锁，id[102,199]不存在的数据同样被加锁，此时如果另一个事务需要新插入id=102的数据，就必须等待上一个事务结束。</p>
 <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>说到数据库锁就不得不说死锁，死锁不仅存在于数据库中，在很多资源竞争的场合下都会出现死锁。<br>死锁发生的四个必要条件：</p>
 <ul>
@@ -452,7 +453,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、锁的分类"><span class="toc-number">1.</span> <span class="toc-text">一、锁的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、乐观锁与悲观锁"><span class="toc-number">2.</span> <span class="toc-text">二、乐观锁与悲观锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、表锁"><span class="toc-number">3.</span> <span class="toc-text">三、表锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、行锁"><span class="toc-number">4.</span> <span class="toc-text">四、行锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、MVCC与事务的隔离机制"><span class="toc-number">5.</span> <span class="toc-text">五、MVCC与事务的隔离机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable-read隔离级别中。"><span class="toc-number">6.</span> <span class="toc-text">在Mysql中MVCC默认配合GAP间隙锁，已经避免了幻读，不过只限于Repeatable read隔离级别中。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#间隙锁GAP"><span class="toc-number">7.</span> <span class="toc-text">间隙锁GAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-number">8.</span> <span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库锁总结"><span class="toc-number">9.</span> <span class="toc-text">数据库锁总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、锁的分类"><span class="toc-number">1.</span> <span class="toc-text">一、锁的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、乐观锁与悲观锁"><span class="toc-number">2.</span> <span class="toc-text">二、乐观锁与悲观锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、表锁"><span class="toc-number">3.</span> <span class="toc-text">三、表锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、行锁"><span class="toc-number">4.</span> <span class="toc-text">四、行锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、MVCC与事务的隔离机制"><span class="toc-number">5.</span> <span class="toc-text">五、MVCC与事务的隔离机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#间隙锁GAP"><span class="toc-number">6.</span> <span class="toc-text">间隙锁GAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-number">7.</span> <span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库锁总结"><span class="toc-number">8.</span> <span class="toc-text">数据库锁总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -597,10 +598,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -613,11 +610,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">留言板</a>
+                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
+                <a href="javascript:void(0)" class="js-tag color1">slurm</a>
               </li>
             
             <div class="clearfix"></div>
