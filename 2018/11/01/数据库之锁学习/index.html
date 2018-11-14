@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://zhangcheng.fun">
   <title>数据库之锁 | 尘曲的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
+  <meta name="description" content="一、锁的分类按使用方式：  乐观锁 悲观锁  按粒度：  表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库之锁">
 <meta property="og:url" content="http://zhangcheng.fun/2018/11/01/数据库之锁学习/index.html">
 <meta property="og:site_name" content="尘曲的个人博客">
-<meta property="og:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
+<meta property="og:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁  按粒度：  表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-14T16:26:51.785Z">
+<meta property="og:updated_time" content="2018-11-14T16:27:59.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库之锁">
-<meta name="twitter:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁按粒度： 表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修改的次">
+<meta name="twitter:description" content="一、锁的分类按使用方式：  乐观锁 悲观锁  按粒度：  表级锁 表共享读锁 表独占写锁   行级锁 共享锁(S锁) 排他锁(X锁)   页级锁  二、乐观锁与悲观锁乐观锁：乐观锁并不是锁，而是一种处理方式。乐观的认为不会产生并发问题，每次取数据时不会有其他线程对数据进行修改，不会加锁，但在每次更新数据时会重新确认数据有没有已被修改。处理方式：一般是在表中新增一个version字段用来记录数据被修">
   
     <link rel="alternative" href="/atom.xml" title="尘曲的个人博客" type="application/atom+xml">
   
@@ -189,7 +189,10 @@ var _hmt = _hmt || [];
         <h2 id="一、锁的分类"><a href="#一、锁的分类" class="headerlink" title="一、锁的分类"></a>一、锁的分类</h2><p>按使用方式：</p>
 <ul>
 <li>乐观锁</li>
-<li>悲观锁<br>按粒度：</li>
+<li>悲观锁</li>
+</ul>
+<p>按粒度：</p>
+<ul>
 <li>表级锁<ul>
 <li>表共享读锁</li>
 <li>表独占写锁</li>
@@ -596,10 +599,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">支付宝</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">slurm</a>
               </li>
              
@@ -609,6 +608,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">微信小程序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">支付宝</a>
               </li>
             
             <div class="clearfix"></div>
